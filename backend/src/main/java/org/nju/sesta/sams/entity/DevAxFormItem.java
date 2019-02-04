@@ -1,4 +1,4 @@
-package com.nju.sesta.sams.entity;
+package org.nju.sesta.sams.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

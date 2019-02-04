@@ -1,6 +1,6 @@
-package com.nju.sesta.sams.entity;
+package org.nju.sesta.sams.entity;
 
-import com.nju.sesta.sams.enums.RoleName;
+import org.nju.sesta.sams.enums.RoleName;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ public class Role {
     private RoleName roleName;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private Set<User> users = new HashSet<User>();
+    private Set<org.nju.sesta.sams.entity.User> users = new HashSet<User>();
 
     public String getId() {
         return id;

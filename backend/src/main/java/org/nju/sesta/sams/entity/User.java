@@ -1,8 +1,9 @@
-package com.nju.sesta.sams.entity;
+package org.nju.sesta.sams.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,11 +17,11 @@ public class User {
 
     @NotNull
     @Size(min = 8, max = 50)
-    private String password;
+    private String passwordHash;
 
     @NotNull
     @Column(unique = true)
-    private String emailAddress;
+    private String email;
 
     @NotNull
     private String name;
@@ -40,6 +41,14 @@ public class User {
     @NotNull
     private Boolean enabled;
 
+    @Column(name = "last_logout_date")
+    @Temporal(TemporalType.DATE)
+    private Calendar lastLogoutDate;
+
+    @Column(name = "last_password_reset_date")
+    @Temporal(TemporalType.DATE)
+    private Calendar lastPasswordResetDate;
+
     @NotNull
     @OneToMany(targetEntity = DevAxFormItem.class,
             cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "studentId")
@@ -53,12 +62,12 @@ public class User {
         this.id = id;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
@@ -85,12 +94,12 @@ public class User {
         DevAxForm = devAxForm;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public Boolean getEnabled() {
@@ -99,6 +108,22 @@ public class User {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Calendar getLastLogoutDate() {
+        return lastLogoutDate;
+    }
+
+    public void setLastLogoutDate(Calendar lastLogoutDate) {
+        this.lastLogoutDate = lastLogoutDate;
+    }
+
+    public Calendar getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Calendar lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
     public Set<Role> getRoles() {

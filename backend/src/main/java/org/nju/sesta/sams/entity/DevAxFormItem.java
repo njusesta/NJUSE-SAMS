@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "dev_ax_form_item")
+@Table(name = "tbl_dev_ax_form_item")
 public class DevAxFormItem {
     @Id
     @NotNull

@@ -1,11 +1,11 @@
 package org.nju.sesta.sams.entity;
 
+import org.nju.sesta.sams.response.PersonalInfo.ContactInformation;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "tbl_user")
@@ -26,8 +26,13 @@ public class User {
     @NotNull
     private String name;
 
+    @Column(name = "contact_information")
+    private ContactInformation contactInformation;
+
     @NotNull
     private String grade;
+
+    private String clazz;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -36,7 +41,7 @@ public class User {
             name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    private Set<Role> roles = new HashSet<Role>();
+    private List<Role> roles = new ArrayList<Role>();
 
     @NotNull
     private Boolean enabled;
@@ -49,10 +54,22 @@ public class User {
     @Temporal(TemporalType.DATE)
     private Calendar lastPasswordResetDate;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_activity",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "activity_ID", referencedColumnName = "id")})
+    private List<Activity> activitiesJoined = new ArrayList<Activity>();
+
+    @NotNull
+    @OneToMany(targetEntity = Activity.class,
+            cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "studentId")
+    private List<Activity> activitiesReleased = new ArrayList<Activity>();
+
     @NotNull
     @OneToMany(targetEntity = DevAxFormItem.class,
             cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "studentId")
-    private Set<DevAxFormItem> DevAxForm = new HashSet<DevAxFormItem>();
+    private List<DevAxFormItem> DevAxForm = new ArrayList<DevAxFormItem>();
 
     public String getId() {
         return id;
@@ -78,6 +95,14 @@ public class User {
         this.name = name;
     }
 
+    public ContactInformation getContactInformation() {
+        return contactInformation;
+    }
+
+    public void setContactInformation(ContactInformation contactInformation) {
+        this.contactInformation = contactInformation;
+    }
+
     public String getGrade() {
         return grade;
     }
@@ -86,11 +111,19 @@ public class User {
         this.grade = grade;
     }
 
-    public Set<DevAxFormItem> getDevAxForm() {
+    public String getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(String clazz) {
+        this.clazz = clazz;
+    }
+
+    public List<DevAxFormItem> getDevAxForm() {
         return DevAxForm;
     }
 
-    public void setDevAxForm(Set<DevAxFormItem> devAxForm) {
+    public void setDevAxForm(List<DevAxFormItem> devAxForm) {
         DevAxForm = devAxForm;
     }
 
@@ -126,11 +159,27 @@ public class User {
         this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public List<Activity> getActivitiesJoined() {
+        return activitiesJoined;
+    }
+
+    public void setActivitiesJoined(List<Activity> activitiesJoined) {
+        this.activitiesJoined = activitiesJoined;
+    }
+
+    public List<Activity> getActivitiesReleased() {
+        return activitiesReleased;
+    }
+
+    public void setActivitiesReleased(List<Activity> activitiesReleased) {
+        this.activitiesReleased = activitiesReleased;
     }
 }

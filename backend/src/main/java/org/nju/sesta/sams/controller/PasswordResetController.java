@@ -1,7 +1,9 @@
 package org.nju.sesta.sams.controller;
 
 import org.nju.sesta.sams.parameter.password.PasswordResetParameter;
-import org.springframework.http.HttpMethod;
+import org.nju.sesta.sams.service.PasswordResetService;
+import org.nju.sesta.sams.util.token.JwtToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,13 +13,20 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/password")
-public class PasswordRqestController {
+public class PasswordResetController {
 
+    @Autowired
+    private JwtToken jwtToken;
 
+    @Autowired
+    private PasswordResetService service;
 
     @RequestMapping(value = "reset", method = RequestMethod.POST)
     public void resetPassword(@RequestParam PasswordResetParameter parameter, HttpServletRequest request){
-        //待实现
+        String authToken = request.getHeader("Authentication");
+        final String token = authToken.substring(7);
+        String username = jwtToken.getUsernameFromToken(token);
+        service.resetPassword(parameter.getNewPassword(), username);
     }
 
 }

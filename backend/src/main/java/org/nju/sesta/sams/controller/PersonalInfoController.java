@@ -49,7 +49,7 @@ public class PersonalInfoController {
             method = RequestMethod.POST,
             produces = {"application/json", "application/xml"})
     public ResponseEntity<?> updateDevFormInfo(@PathVariable String id, @RequestParam DevFormInfoParameter parameter){
-        if(service.updateDevFormInfo(id,parameter))
+        if(service.updateDevAxFormInfo(id,parameter))
             return ResponseEntity.ok(null);
         else
             return new ResponseEntity(HttpStatus.BAD_REQUEST);

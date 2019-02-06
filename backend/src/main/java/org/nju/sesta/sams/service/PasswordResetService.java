@@ -16,4 +16,6 @@ public class PasswordResetService {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         repository.resetPassword(encoder.encode(newPassword), Calendar.getInstance(), username);
     }
+
+    //密码重置之后再写
 }

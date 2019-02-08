@@ -1,4 +1,4 @@
-package org.nju.sesta.sams.service;
+package org.nju.sesta.sams.factory;
 
 import org.nju.sesta.sams.entity.Activity;
 import org.nju.sesta.sams.parameter.activity.NewMatchParameter;

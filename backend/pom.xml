@@ -78,6 +78,14 @@
             <version>0.9.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.github.penggle/kaptcha -->
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
+        </dependency>
+
+
         <!--好像是个静态代码分析工具暂时不管-->
         <!--<dependency>-->
             <!--<groupId>com.google.code.findbugs</groupId>-->

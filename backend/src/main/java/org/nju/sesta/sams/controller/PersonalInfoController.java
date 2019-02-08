@@ -28,7 +28,7 @@ public class PersonalInfoController {
     @RequestMapping(value = "basic_info/{id}",
             method = RequestMethod.POST,
             produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> updateBasicInfo(@PathVariable String id, @RequestParam BasicInfoParameter parameter){
+    public ResponseEntity<?> updateBasicInfo(@PathVariable String id, @RequestBody BasicInfoParameter parameter){
         if(service.updateBasicInfo(id, parameter))
             return ResponseEntity.ok(null);
         else
@@ -38,7 +38,7 @@ public class PersonalInfoController {
     @RequestMapping(value = "activity_info/{id}",
             method = RequestMethod.POST,
             produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> updateActivityInfo(@PathVariable String id, @RequestParam ActivityInfoParameter parameter){
+    public ResponseEntity<?> updateActivityInfo(@PathVariable String id, @RequestBody ActivityInfoParameter parameter){
         if(service.updateActivityInfo(id, parameter))
             return ResponseEntity.ok(null);
         else
@@ -48,7 +48,7 @@ public class PersonalInfoController {
     @RequestMapping(value = "activity_info/{id}",
             method = RequestMethod.POST,
             produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> updateDevFormInfo(@PathVariable String id, @RequestParam DevFormInfoParameter parameter){
+    public ResponseEntity<?> updateDevFormInfo(@PathVariable String id, @RequestBody DevFormInfoParameter parameter){
         if(service.updateDevAxFormInfo(id,parameter))
             return ResponseEntity.ok(null);
         else

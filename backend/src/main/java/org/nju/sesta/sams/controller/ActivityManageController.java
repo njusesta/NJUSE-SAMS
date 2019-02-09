@@ -16,10 +16,19 @@ public class ActivityManageController {
     @RequestMapping(value = "/match/new",
             method = RequestMethod.POST,
             consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> applyForNewActivity(@RequestBody NewMatchParameter parameter){
+    public ResponseEntity<?> applyForNewMatch(@RequestBody NewMatchParameter parameter){
         if(service.applyForNewMatch(parameter))
             return ResponseEntity.ok(null);
         else 
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "/activity/new",
+            method = RequestMethod.POST,
+            consumes = {"application/json", "application/xml"})
+    public ResponseEntity<?> applyForNewActivity(@RequestBody NewMatchParameter parameter){
+        if(service.applyForNewActivity(parameter))
+            return ResponseEntity.ok(null);
+        else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

@@ -15,4 +15,8 @@ public class ActivityManageService {
         int rowsAffected = repository.saveActivity(ActivityFactory.create(parameter));
         return rowsAffected !=0;
     }
+    public boolean applyForNewActivity(NewMatchParameter parameter){
+        int rowsAffected = repository.saveActivity(ActivityFactory.create(parameter));
+        return rowsAffected !=0;
+    }
 }

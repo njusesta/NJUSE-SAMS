@@ -2,7 +2,7 @@ package org.nju.sesta.sams.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "tbl_dev_ax_form_item")
@@ -20,7 +20,7 @@ public class DevAxFormItem {
 
     @NotNull
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Calendar date;
 
     @NotNull
     private int point;
@@ -54,12 +54,12 @@ public class DevAxFormItem {
         this.rule = rule;
     }
 
-    public Date getDate() {
-        return (Date)date.clone();
+    public Calendar getDate() {
+        return (Calendar)date.clone();
     }
 
-    public void setDate(Date date) {
-        this.date = (Date) date.clone();
+    public void setDate(Calendar date) {
+        this.date = (Calendar)date.clone();
     }
 
     public int getPoint() {

@@ -50,5 +50,106 @@ public class Activity {
     private List<Group> groups;
 
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+    return name;}
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Calendar getRegEndDate() {
+        return regEndDate;
+    }
+
+    public void setRegEndDate(Calendar regEndDate) {
+        this.regEndDate = regEndDate;
+    }
+
+    public ActivityKind getKind() {
+        return kind;
+    }
+
+    public void setKind(ActivityKind kind) {
+        this.kind = kind;
+    }
+
+    public Calendar getRegStartDate() {
+        return regStartDate;
+    }
+
+    public void setRegStartDate(Calendar regStartDate) {
+        this.regStartDate = regStartDate;
+    }
+
+    public List<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<User> participants) {
+        this.participants = participants;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Integer getLimited() {
+        return limited;
+    }
+
+    public void setLimited(Integer limited) {
+        this.limited = limited;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getWay2Register() {
+        return way2Register;
+    }
+
+    public void setWay2Register(String way2Register) {
+        this.way2Register = way2Register;
+    }
+
+    public Calendar getInitDate() {
+        return initDate;
+    }
+
+    public void setInitDate(Calendar initDate) {
+        this.initDate = initDate;
+    }
 }

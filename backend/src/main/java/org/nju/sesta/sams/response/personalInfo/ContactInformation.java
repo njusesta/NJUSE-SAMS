@@ -1,4 +1,4 @@
-package org.nju.sesta.sams.response.PersonalInfo;
+package org.nju.sesta.sams.response.personalInfo;
 
 public class ContactInformation {
     private String phoneNumber;

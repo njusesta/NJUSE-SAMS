@@ -3,7 +3,7 @@ package org.nju.sesta.sams.dao;
 import org.nju.sesta.sams.entity.Activity;
 import org.nju.sesta.sams.entity.DevAxFormItem;
 import org.nju.sesta.sams.entity.User;
-import org.nju.sesta.sams.response.PersonalInfo.ContactInformation;
+import org.nju.sesta.sams.response.personalInfo.ContactInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

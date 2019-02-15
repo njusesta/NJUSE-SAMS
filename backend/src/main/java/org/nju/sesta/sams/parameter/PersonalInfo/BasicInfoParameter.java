@@ -1,6 +1,6 @@
 package org.nju.sesta.sams.parameter.PersonalInfo;
 
-import org.nju.sesta.sams.response.PersonalInfo.ContactInformation;
+import org.nju.sesta.sams.response.personalInfo.ContactInformation;
 
 public class BasicInfoParameter {
     private String name;

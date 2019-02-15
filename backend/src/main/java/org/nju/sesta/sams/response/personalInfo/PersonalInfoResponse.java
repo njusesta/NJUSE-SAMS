@@ -1,9 +1,8 @@
-package org.nju.sesta.sams.response.PersonalInfo;
+package org.nju.sesta.sams.response.personalInfo;
 
 import org.nju.sesta.sams.entity.Activity;
 import org.nju.sesta.sams.entity.Role;
 import org.nju.sesta.sams.entity.User;
-import org.nju.sesta.sams.enums.RoleName;
 
 import java.util.List;
 import java.util.stream.Collectors;

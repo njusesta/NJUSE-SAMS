@@ -1,6 +1,6 @@
 package org.nju.sesta.sams.config;
 
-import org.nju.sesta.sams.Filter.JwtAuthorizationTokenFilter;
+import org.nju.sesta.sams.filter.JwtAuthorizationTokenFilter;
 import org.nju.sesta.sams.security.JwtAuthenticationEntryPoint;
 import org.nju.sesta.sams.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

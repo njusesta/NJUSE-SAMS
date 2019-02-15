@@ -1,4 +1,4 @@
-package org.nju.sesta.sams.Filter;
+package org.nju.sesta.sams.filter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import org.nju.sesta.sams.util.token.JwtToken;

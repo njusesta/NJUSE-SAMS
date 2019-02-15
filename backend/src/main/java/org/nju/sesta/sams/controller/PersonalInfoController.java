@@ -3,7 +3,7 @@ package org.nju.sesta.sams.controller;
 import org.nju.sesta.sams.parameter.PersonalInfo.ActivityInfoParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.BasicInfoParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.DevFormInfoParameter;
-import org.nju.sesta.sams.response.PersonalInfo.PersonalInfoResponse;
+import org.nju.sesta.sams.response.personalInfo.PersonalInfoResponse;
 import org.nju.sesta.sams.service.PersonalInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

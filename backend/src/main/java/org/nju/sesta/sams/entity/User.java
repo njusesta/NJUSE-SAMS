@@ -1,6 +1,6 @@
 package org.nju.sesta.sams.entity;
 
-import org.nju.sesta.sams.response.PersonalInfo.ContactInformation;
+import org.nju.sesta.sams.response.personalInfo.ContactInformation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

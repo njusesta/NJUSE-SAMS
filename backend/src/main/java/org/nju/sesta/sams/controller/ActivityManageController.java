@@ -1,6 +1,7 @@
 package org.nju.sesta.sams.controller;
 
 import org.nju.sesta.sams.parameter.activity.NewMatchParameter;
+import org.nju.sesta.sams.response.ActivityInfo.ActivityInfoResponse;
 import org.nju.sesta.sams.service.ActivityManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,5 +31,11 @@ public class ActivityManageController {
             return ResponseEntity.ok(null);
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    @RequestMapping(value = "/{id}",
+            method = RequestMethod.GET,
+            produces = {"application/json", "application/xml"})
+    public ResponseEntity<?> getPersonalInfo(@PathVariable String id) {
+        return ResponseEntity.ok(new ActivityInfoResponse(service.getActivityInfo(Long.parseLong(id))));
     }
 }

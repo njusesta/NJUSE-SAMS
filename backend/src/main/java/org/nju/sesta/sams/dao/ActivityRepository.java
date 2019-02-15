@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
     int saveActivity(Activity activity);
+    Activity findById(long id);
 }

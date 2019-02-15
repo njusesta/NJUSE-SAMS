@@ -1,6 +1,7 @@
 package org.nju.sesta.sams.service;
 
 import org.nju.sesta.sams.dao.ActivityRepository;
+import org.nju.sesta.sams.entity.Activity;
 import org.nju.sesta.sams.factory.ActivityFactory;
 import org.nju.sesta.sams.parameter.activity.NewMatchParameter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,9 @@ public class ActivityManageService {
     public boolean applyForNewActivity(NewMatchParameter parameter){
         int rowsAffected = repository.saveActivity(ActivityFactory.create(parameter));
         return rowsAffected !=0;
+    }
+
+    public Activity getActivityInfo(long id) {
+        return repository.findById(id);
     }
 }

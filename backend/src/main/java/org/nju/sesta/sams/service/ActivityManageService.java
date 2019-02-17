@@ -19,7 +19,9 @@ public class ActivityManageService {
         Activity a = repository.save(activity);
         return true;
     }
+    public boolean signUpActivity(){
 
+    }
     public Activity getActivityInfo(long id) {
         return repository.findById(id);
     }

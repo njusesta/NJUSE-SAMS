@@ -23,12 +23,12 @@ public class DevAxFormItem {
     private Calendar date;
 
     @NotNull
-    private int point;
+    private Integer point;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
-    private int studentId;
+    private Integer studentId;
 
     public Long getId() {
         return id;
@@ -62,19 +62,19 @@ public class DevAxFormItem {
         this.date = (Calendar)date.clone();
     }
 
-    public int getPoint() {
+    public Integer getPoint() {
         return point;
     }
 
-    public void setPoint(int point) {
+    public void setPoint(Integer point) {
         this.point = point;
     }
 
-    public int getStudentId() {
+    public @NotNull Integer getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(@NotNull Integer studentId) {
         this.studentId = studentId;
     }
 

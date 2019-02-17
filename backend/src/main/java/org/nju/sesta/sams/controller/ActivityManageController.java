@@ -31,44 +31,50 @@ public class ActivityManageController {
     @RequestMapping(value = "/match/new",
             method = RequestMethod.POST,
             consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> applyForNewMatch(@RequestBody NewMatchParameter parameter, HttpServletRequest request){
-        Activity activity = ActivityFactory.create(parameter);
-        activity.setCreatorId(getIdFromRequest(request));
+    public ResponseEntity<?> applyForNewMatch(@RequestBody NewMatchParameter parameter, HttpServletRequest request) {
+//        activity.setCreatorId(getIdFromRequest(request));
 
-        if(service.applyForNewMatch(activity))
-            return ResponseEntity.ok(null);
-        else 
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-    @RequestMapping(value = "/activity/new",
-            method = RequestMethod.POST,
-            consumes = {"application/json", "application/xml"})
-    public ResponseEntity<?> applyForNewActivity(@RequestBody NewActivityParameter parameter, HttpServletRequest request){
         Activity activity = ActivityFactory.create(parameter);
-        activity.setCreatorId(getIdFromRequest(request));
-
-        if(service.applyForNewActivity(activity))
+        String studentId = getIdFromRequest(request);
+        if (service.applyForNewMatch(activity, studentId))
             return ResponseEntity.ok(null);
         else
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping(value = "/activity/new",
+            method = RequestMethod.POST,
+            consumes = {"application/json", "application/xml"})
+    public ResponseEntity<?> applyForNewActivity(@RequestBody NewActivityParameter parameter, HttpServletRequest request) {
+//        activity.setCreatorId(getIdFromRequest(request));
+        //
+        Activity activity = ActivityFactory.create(parameter);
+        String studentId = getIdFromRequest(request);
+        if (service.applyForNewMatch(activity, studentId))
+            return ResponseEntity.ok(null);
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @RequestMapping(value = "/{id}",
             method = RequestMethod.GET,
             produces = {"application/json", "application/xml"})
     public ResponseEntity<?> getActivityInfo(@PathVariable String id) {
         return ResponseEntity.ok(new ActivityInfoResponse(service.getActivityInfo(Long.parseLong(id))));
     }
+
     @RequestMapping(value = "/{id}/signUp",
-    method = RequestMethod.GET)
-    public ResponseEntity<?> signUp(@PathVariable String id){
-    if(service.signUpActivity())
-        return ResponseEntity.ok(null);
-    else
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            method = RequestMethod.GET)
+    public ResponseEntity<?> signUp(@PathVariable Long id, HttpServletRequest request) {
+        String studentId = getIdFromRequest(request);
+        if (service.signUpActivity(id, studentId))
+            return ResponseEntity.ok(null);
+        else
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 
-    private String getIdFromRequest(HttpServletRequest request){
+    private String getIdFromRequest(HttpServletRequest request) {
         String token = request.getHeader(header).substring(7);
         return jwtToken.getUsernameFromToken(token);
     }

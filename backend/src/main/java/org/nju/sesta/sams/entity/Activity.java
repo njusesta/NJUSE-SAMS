@@ -39,7 +39,7 @@ public class Activity {
 
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
-    private String creatorId;
+    private User creator;
 
     @ManyToMany(mappedBy = "activitiesJoined", fetch = FetchType.LAZY)
     private List<User> participants;
@@ -112,12 +112,12 @@ public class Activity {
         this.limited = limited;
     }
 
-    public String getCreatorId() {
-        return creatorId;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setCreatorId(String creatorId) {
-        this.creatorId = creatorId;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
     public List<Group> getGroups() {

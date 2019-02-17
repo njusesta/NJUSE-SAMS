@@ -44,7 +44,7 @@ public class User {
     private List<Role> roles = new ArrayList<Role>();
 
     @NotNull
-    private Boolean enabled;
+    private Boolean enabled = true;
 
     @Column(name = "last_logout_date")
     @Temporal(TemporalType.DATE)
@@ -54,19 +54,19 @@ public class User {
     @Temporal(TemporalType.DATE)
     private Calendar lastPasswordResetDate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_activity",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "activity_ID", referencedColumnName = "id")})
     private List<Activity> activitiesJoined = new ArrayList<Activity>();
 
-    @NotNull
     @OneToMany(targetEntity = Activity.class,
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "studentId")
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER, mappedBy = "studentId")
     private List<Activity> activitiesReleased = new ArrayList<Activity>();
 
-    @NotNull
     @OneToMany(targetEntity = DevAxFormItem.class,
             cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "studentId")
     private List<DevAxFormItem> DevAxForm = new ArrayList<DevAxFormItem>();

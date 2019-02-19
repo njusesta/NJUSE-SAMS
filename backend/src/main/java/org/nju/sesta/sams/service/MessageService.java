@@ -21,7 +21,7 @@ public class MessageService {
         return repository.findByStudentId(studentId);
     }
 
-    public Message getMessageDetail(Long id){
+    public Message getMessageDetail(Long id) {
         return repository.findById(id.longValue());
     }
 }

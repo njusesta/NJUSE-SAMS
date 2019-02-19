@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class JwtUserFactory {
 
-    public static JwtUser create(User user){
+    public static JwtUser create(User user) {
         return new JwtUser(
                 user.getName(),
                 user.getPasswordHash(),

@@ -1,6 +1,7 @@
 package org.nju.sesta.sams.util.token;
 
 //import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Clock;
 import io.jsonwebtoken.Jwts;
@@ -23,7 +24,7 @@ public class JwtToken implements Serializable {
     static final String CLAIM_KEY_USERNAME = "sub";
     static final String CLAIM_KEY_CREATED = "iat";
     private static final long serialVersionUID = -3301605591108950415L;
-//    @SuppressFBWarnings(value = "SE_BAD_FIELD", justification = "It's okay here")
+    //    @SuppressFBWarnings(value = "SE_BAD_FIELD", justification = "It's okay here")
     private Clock clock = DefaultClock.INSTANCE;
 
     @Value("${jwt.secret}")

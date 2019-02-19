@@ -19,7 +19,7 @@ public class PasswordResetController {
     private PasswordResetService service;
 
     @RequestMapping(value = "reset", method = RequestMethod.POST)
-    public void resetPassword(@RequestBody PasswordResetParameter parameter, HttpServletRequest request){
+    public void resetPassword(@RequestBody PasswordResetParameter parameter, HttpServletRequest request) {
         String authToken = request.getHeader("Authentication");
         final String token = authToken.substring(7);
         String username = jwtToken.getUsernameFromToken(token);

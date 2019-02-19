@@ -28,8 +28,9 @@ public class ActivityManageService {
         userDao.save(user);
         return true;
     }
-    public boolean signUpActivity(Long id, String studentId){
-        User u =userDao.getOne(studentId);
+
+    public boolean signUpActivity(Long id, String studentId) {
+        User u = userDao.getOne(studentId);
         Activity a = activityDao.getOne(id);
         u.getActivitiesJoined().add(a);
         userDao.save(u);

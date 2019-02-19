@@ -55,11 +55,11 @@ public class DevAxFormItem {
     }
 
     public Calendar getDate() {
-        return (Calendar)date.clone();
+        return (Calendar) date.clone();
     }
 
     public void setDate(Calendar date) {
-        this.date = (Calendar)date.clone();
+        this.date = (Calendar) date.clone();
     }
 
     public Integer getPoint() {

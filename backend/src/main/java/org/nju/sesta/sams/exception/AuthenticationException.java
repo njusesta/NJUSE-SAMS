@@ -5,7 +5,7 @@ public class AuthenticationException extends RuntimeException {
         super(message, cause);
     }
 
-    public AuthenticationException(String msg){
+    public AuthenticationException(String msg) {
         super(msg);
     }
 }

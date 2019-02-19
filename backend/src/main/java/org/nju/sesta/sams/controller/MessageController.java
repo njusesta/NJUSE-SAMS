@@ -29,28 +29,28 @@ public class MessageController {
 
     @RequestMapping(value = "/check",
             method = RequestMethod.GET)
-    public ResponseEntity<?> checkMessagesUnead(HttpServletRequest request){
+    public ResponseEntity<?> checkMessagesUnead(HttpServletRequest request) {
         String studentId = getUserIdFromRequest(request);
-        Map<String, Boolean> res = new HashMap<>() ;
+        Map<String, Boolean> res = new HashMap<>();
         res.put("haveMessageUnread", service.checkMessageUnread(studentId));
         return ResponseEntity.ok(res);
     }
 
     @RequestMapping(value = "/list",
             method = RequestMethod.GET)
-    public ResponseEntity<?> getMessageList(HttpServletRequest request){
+    public ResponseEntity<?> getMessageList(HttpServletRequest request) {
         String studentId = getUserIdFromRequest(request);
         return ResponseEntity.ok(service.getMessageList(studentId));
     }
 
     @RequestMapping(value = "/{messageId}",
             method = RequestMethod.GET)
-    public ResponseEntity<?>  getMessageDetail(@PathVariable Long messageId){
+    public ResponseEntity<?> getMessageDetail(@PathVariable Long messageId) {
         return ResponseEntity.ok(service.getMessageDetail(messageId));
     }
 
 
-    private String getUserIdFromRequest(HttpServletRequest request){
+    private String getUserIdFromRequest(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader).substring(7);
         return jwtToken.getUsernameFromToken(token);
     }

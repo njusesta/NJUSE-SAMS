@@ -28,8 +28,8 @@ public class PersonalInfoController {
     @RequestMapping(value = "basic_info/{id}",
             method = RequestMethod.POST,
             produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> updateBasicInfo(@PathVariable String id, @RequestBody BasicInfoParameter parameter){
-        if(service.updateBasicInfo(id, parameter))
+    public ResponseEntity<?> updateBasicInfo(@PathVariable String id, @RequestBody BasicInfoParameter parameter) {
+        if (service.updateBasicInfo(id, parameter))
             return ResponseEntity.ok(null);
         else
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -38,8 +38,8 @@ public class PersonalInfoController {
     @RequestMapping(value = "activity_info/{id}",
             method = RequestMethod.POST,
             produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> updateActivityInfo(@PathVariable String id, @RequestBody ActivityInfoParameter parameter){
-        if(service.updateActivityInfo(id, parameter))
+    public ResponseEntity<?> updateActivityInfo(@PathVariable String id, @RequestBody ActivityInfoParameter parameter) {
+        if (service.updateActivityInfo(id, parameter))
             return ResponseEntity.ok(null);
         else
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -48,8 +48,8 @@ public class PersonalInfoController {
     @RequestMapping(value = "dev_form_info/{id}",
             method = RequestMethod.POST,
             produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> updateDevFormInfo(@PathVariable String id, @RequestBody DevFormInfoParameter parameter){
-        if(service.updateDevAxFormInfo(id,parameter))
+    public ResponseEntity<?> updateDevFormInfo(@PathVariable String id, @RequestBody DevFormInfoParameter parameter) {
+        if (service.updateDevAxFormInfo(id, parameter))
             return ResponseEntity.ok(null);
         else
             return new ResponseEntity(HttpStatus.BAD_REQUEST);

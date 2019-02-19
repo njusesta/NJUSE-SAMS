@@ -8,8 +8,8 @@ import org.nju.sesta.sams.parameter.activity.NewMatchParameter;
 import java.util.Calendar;
 
 public class ActivityFactory {
-    public static Activity create(NewMatchParameter p){
-        Activity a =new Activity();
+    public static Activity create(NewMatchParameter p) {
+        Activity a = new Activity();
         a.setName(p.getName());
         a.setContent(p.getContent());
         a.setInitDate(Calendar.getInstance());
@@ -21,8 +21,8 @@ public class ActivityFactory {
         return a;
     }
 
-    public static Activity create(NewActivityParameter p){
-        Activity a =new Activity();
+    public static Activity create(NewActivityParameter p) {
+        Activity a = new Activity();
         a.setName(p.getName());
         a.setContent(p.getContent());
         a.setType(p.getType());
@@ -34,9 +34,6 @@ public class ActivityFactory {
         a.setWay2Register(p.getWay2Register());
         return a;
     }
-
-
-
 
 
 }

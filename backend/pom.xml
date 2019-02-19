@@ -85,6 +85,12 @@
             <version>2.3.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+
 
         <!--好像是个静态代码分析工具暂时不管-->
         <!--<dependency>-->

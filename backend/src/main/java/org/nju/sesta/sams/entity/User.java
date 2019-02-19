@@ -26,14 +26,12 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @NotNull
     private String name;
 
     @Embedded
     @Column(name = "contact_information")
     private ContactInformation contactInformation;
 
-    @NotNull
     private String grade;
 
     private String clazz;

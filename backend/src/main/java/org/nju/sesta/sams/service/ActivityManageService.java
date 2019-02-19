@@ -37,6 +37,6 @@ public class ActivityManageService {
     }
 
     public Activity getActivityInfo(long id) {
-        return activityDao.findById(id);
+        return activityDao.getOne(id);
     }
 }

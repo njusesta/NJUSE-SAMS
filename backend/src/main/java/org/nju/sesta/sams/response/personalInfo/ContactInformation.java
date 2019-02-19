@@ -1,5 +1,8 @@
 package org.nju.sesta.sams.response.personalInfo;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class ContactInformation {
     private String phoneNumber;
     private String qqNumber;

@@ -13,28 +13,33 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 20)
     private String name;
 
     private String content;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 20)
     private ActivityKind kind;
 
+    @Column(length = 20)
     private String type;
 
-    @Column(name = "way_to_register")
+    @Column(name = "way_to_register", length = 20)
     private String way2Register;
 
-    @Column(name = "reg_start_date")
+    @Column(name = "reg_start_date", length = 30)
     @Temporal(TemporalType.DATE)
     private Calendar regStartDate;
 
-    @Column(name = "reg_end_date")
+    @Column(name = "reg_end_date", length = 30)
     @Temporal(TemporalType.DATE)
     private Calendar regEndDate;
 
     private Integer limited;
 
+    @Temporal(TemporalType.DATE)
+    @Column(length = 30)
     private Calendar initDate;
 
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
@@ -45,7 +50,7 @@ public class Activity {
     private List<User> participants;
 
     @OneToMany(targetEntity = Group.class,
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "belongTo")
+            cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "belongTo")
     private List<Group> groups;
 
 
@@ -58,7 +63,8 @@ public class Activity {
     }
 
     public String getName() {
-    return name;}
+        return name;
+    }
 
     public void setName(String name) {
         this.name = name;

@@ -15,7 +15,7 @@ public class Group {
     @JoinColumn(name = "activity_id", referencedColumnName = "id")
     private Activity belongTo;
 
-    private List<String> participants;
+    private String participant;
 
     private String rule;
 
@@ -45,12 +45,12 @@ public class Group {
         this.belongTo = belongTo;
     }
 
-    public List<String> getParticipants() {
-        return participants;
+    public String getParticipant() {
+        return participant;
     }
 
-    public void setParticipants(List<String> participants) {
-        this.participants = participants;
+    public void setParticipant(String participant) {
+        this.participant = participant;
     }
 
     public String getRule() {

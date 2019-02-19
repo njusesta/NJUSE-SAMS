@@ -12,8 +12,9 @@ import java.util.Set;
 public class Role {
     @Id
     @NotNull
+    @Column(length = 50)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -23,11 +24,11 @@ public class Role {
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Set<org.nju.sesta.sams.entity.User> users = new HashSet<User>();
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

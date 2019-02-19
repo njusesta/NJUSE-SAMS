@@ -45,7 +45,7 @@ public class PersonalInfoController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "activity_info/{id}",
+    @RequestMapping(value = "dev_form_info/{id}",
             method = RequestMethod.POST,
             produces = {"application/json", "application/xml"})
     public ResponseEntity<?> updateDevFormInfo(@PathVariable String id, @RequestBody DevFormInfoParameter parameter){

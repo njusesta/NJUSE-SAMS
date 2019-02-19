@@ -26,9 +26,9 @@ public class DevAxFormItem {
     private Integer point;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
     @JoinColumn(name = "student_id", referencedColumnName = "id")
-    private Integer studentId;
+    private User owner;
 
     public Long getId() {
         return id;
@@ -70,12 +70,12 @@ public class DevAxFormItem {
         this.point = point;
     }
 
-    public @NotNull Integer getStudentId() {
-        return studentId;
+    public User getOwner() {
+        return owner;
     }
 
-    public void setStudentId(@NotNull Integer studentId) {
-        this.studentId = studentId;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
 }

@@ -24,8 +24,8 @@ public class MessageController {
     @Autowired
     JwtToken jwtToken;
 
-    @Value("${tokenHeader}")
-    String header;
+    @Value("${jwt.header}")
+    String tokenHeader;
 
     @RequestMapping(value = "/check",
             method = RequestMethod.GET)
@@ -51,7 +51,7 @@ public class MessageController {
 
 
     private String getUserIdFromRequest(HttpServletRequest request){
-        String token = request.getHeader(header).substring(7);
+        String token = request.getHeader(tokenHeader).substring(7);
         return jwtToken.getUsernameFromToken(token);
     }
 }

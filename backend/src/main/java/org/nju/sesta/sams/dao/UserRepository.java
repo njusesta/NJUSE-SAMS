@@ -7,10 +7,12 @@ import org.nju.sesta.sams.response.personalInfo.ContactInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.Calendar;
 import java.util.List;
 
+@Repository
 public interface UserRepository extends JpaRepository<User,String> {
     User findByEmail(String id);
 
@@ -27,11 +29,11 @@ public interface UserRepository extends JpaRepository<User,String> {
     @Query("update User u set u.name=?1, u.contactInformation = ?2 , u.clazz = ?3 where u.id = ?4" )
     int updateBasicInfo(String name, ContactInformation contactInfo, String clazz,String id);
 
-    @Modifying
-    @Query("update User u set u.activitiesJoined=?1 where u.id = ?2" )
-    int updateActivityInfo(List<Activity> activities, String id);
-
-    @Modifying
-    @Query("update User u set u.devAxForm=?1 where u.id = ?2" )
-    int updateDevAxFormInfo(List<DevAxFormItem> devAxForm, String id);
+//    @Modifying
+//    @Query("update User u set u.activitiesJoined=?1 where u.id = ?2" )
+//    int updateActivityInfo(List<Activity> activities, String id);
+//
+//    @Modifying
+//    @Query("update User u set u.devAxForm=?1 where u.id = ?2" )
+//    int updateDevAxFormInfo(List<DevAxFormItem> devAxForm, String id);
 }

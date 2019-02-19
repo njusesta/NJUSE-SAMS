@@ -24,8 +24,8 @@ public class ActivityManageController {
     @Autowired
     JwtToken jwtToken;
 
-    @Value("${tokenHeader}")
-    String header;
+    @Value("${jwt.header}")
+    String tokenHeader;
 
 
     @RequestMapping(value = "/match/new",
@@ -47,7 +47,7 @@ public class ActivityManageController {
             consumes = {"application/json", "application/xml"})
     public ResponseEntity<?> applyForNewActivity(@RequestBody NewActivityParameter parameter, HttpServletRequest request) {
 //        activity.setCreatorId(getIdFromRequest(request));
-        //
+
         Activity activity = ActivityFactory.create(parameter);
         String studentId = getIdFromRequest(request);
         if (service.applyForNewMatch(activity, studentId))
@@ -75,7 +75,7 @@ public class ActivityManageController {
 
 
     private String getIdFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(header).substring(7);
+        String token = request.getHeader(tokenHeader).substring(7);
         return jwtToken.getUsernameFromToken(token);
     }
 }

@@ -23,13 +23,19 @@ public class PersonalInfoService {
     }
 
     public boolean updateActivityInfo(String id, ActivityInfoParameter parameter) {
-        int rowsAffected =repository.updateActivityInfo(parameter.getActivities(), id);
-        return rowsAffected != 0;
+        User user = repository.getOne(id);
+        user.setActivitiesJoined(parameter.getActivities());
+        repository.save(user);
+//        int rowsAffected =repository.updateActivityInfo(parameter.getActivities(), id);
+        return true;
     }
 
     public boolean updateDevAxFormInfo(String id, DevFormInfoParameter parameter) {
-        int rowsAffected = repository.updateDevAxFormInfo(parameter.getDevAxForm(), id);
-        return rowsAffected != 0;
+        User user = repository.getOne(id);
+        user.setDevAxForm(parameter.getDevAxForm());
+        repository.save(user);
+//        int rowsAffected = repository.updateDevAxFormInfo(parameter.getDevAxForm(), id);
+        return true;
     }
 
 

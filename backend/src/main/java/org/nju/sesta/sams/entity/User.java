@@ -5,7 +5,9 @@ import org.nju.sesta.sams.response.personalInfo.ContactInformation;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 @Entity
 @Table(name = "tbl_user")
@@ -13,6 +15,7 @@ public class User {
 
     @Id
     @NotNull
+    @Column(length = 30)
     private String id;
 
     @NotNull
@@ -26,6 +29,7 @@ public class User {
     @NotNull
     private String name;
 
+    @Embedded
     @Column(name = "contact_information")
     private ContactInformation contactInformation;
 
@@ -54,21 +58,22 @@ public class User {
     @Temporal(TemporalType.DATE)
     private Calendar lastPasswordResetDate;
 
-    @ManyToMany(fetch = FetchType.EAGER,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_activity",
+
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "activity_ID", referencedColumnName = "id")})
     private List<Activity> activitiesJoined = new ArrayList<Activity>();
 
     @OneToMany(targetEntity = Activity.class,
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER, mappedBy = "studentId")
+            fetch = FetchType.LAZY, mappedBy = "creator")
     private List<Activity> activitiesReleased = new ArrayList<Activity>();
 
     @OneToMany(targetEntity = DevAxFormItem.class,
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "studentId")
+            cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
     private List<DevAxFormItem> DevAxForm = new ArrayList<DevAxFormItem>();
 
     public String getId() {

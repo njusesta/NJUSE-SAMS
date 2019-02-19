@@ -30,7 +30,7 @@ public class ActivityInfoResponse {
         way2Register=activity.getWay2Register();
         regStartDate=activity.getRegStartDate();
         regEndDate=activity.getRegEndDate();
-        creatorId =activity.getCreatorId();
+        creatorId =activity.getCreator().getId();
         isLimited=activity.getLimited();
         participants=activity.getParticipants();
         groups=activity.getGroups();

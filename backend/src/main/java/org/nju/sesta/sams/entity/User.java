@@ -19,21 +19,23 @@ public class User {
     private String id;
 
     @NotNull
-    @Size(min = 8, max = 50)
     private String passwordHash;
 
     @NotNull
     @Column(unique = true)
     private String email;
 
+    @Column(length = 20)
     private String name;
 
     @Embedded
     @Column(name = "contact_information")
     private ContactInformation contactInformation;
 
+    @Column(length = 20)
     private String grade;
 
+    @Column(length = 10)
     private String clazz;
 
     @NotNull

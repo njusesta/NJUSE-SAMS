@@ -48,6 +48,9 @@ public class MailService {
      * @throws Exception                getHost方法中的host不存在异常，这个后面会改的更明确
      */
     public void initAccount(String id) throws GeneralSecurityException, MessagingException, Exception {
+        User test = userDao.getOne(id);
+        if(test!=null)
+            throw new Exception("该学号已被注册");
         char[] codeSequence = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
         char[] code = new char[8];
         for (int i = 0; i < 8; i++) {

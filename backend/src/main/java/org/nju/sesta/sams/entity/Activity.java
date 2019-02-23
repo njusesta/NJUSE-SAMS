@@ -1,5 +1,6 @@
 package org.nju.sesta.sams.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.nju.sesta.sams.enums.ActivityKind;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.List;
 @Table(name = "tbl_activity")
 public class Activity {
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

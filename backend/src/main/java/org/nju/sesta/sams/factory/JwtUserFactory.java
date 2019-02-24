@@ -1,7 +1,8 @@
-package org.nju.sesta.sams.security;
+package org.nju.sesta.sams.factory;
 
 import org.nju.sesta.sams.entity.User;
 import org.nju.sesta.sams.enums.RoleName;
+import org.nju.sesta.sams.security.JwtUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -13,7 +14,7 @@ public class JwtUserFactory {
 
     public static JwtUser create(User user) {
         return new JwtUser(
-                user.getName(),
+                user.getId(),
                 user.getPasswordHash(),
                 user.getEmail(),
                 mapToGrantedAuthorities(Arrays.asList(RoleName.STUDENT)),

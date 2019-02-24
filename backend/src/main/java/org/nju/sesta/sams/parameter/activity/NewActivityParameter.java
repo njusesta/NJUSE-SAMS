@@ -9,7 +9,7 @@ public class NewActivityParameter {
     private String way2Register;
     private Calendar regStartDate;
     private Calendar regEndDate;
-    private Integer limited;
+    private Integer limitedNumber;
 
     public String getName() {
         return name;
@@ -59,11 +59,11 @@ public class NewActivityParameter {
         this.regEndDate = regEndDate;
     }
 
-    public Integer getLimited() {
-        return limited;
+    public Integer getLimitedNumber() {
+        return limitedNumber;
     }
 
-    public void setLimited(Integer limited) {
-        this.limited = limited;
+    public void setLimitedNumber(Integer limitedNumber) {
+        this.limitedNumber = limitedNumber;
     }
 }

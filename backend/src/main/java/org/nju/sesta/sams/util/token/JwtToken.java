@@ -66,8 +66,8 @@ public class JwtToken implements Serializable {
         return (lastPasswordReset != null && created.before(lastPasswordReset));
     }
 
-    private Boolean isCreatedBeforeLastLogOut(Date ceated, Date lastLogOut) {
-        return (lastLogOut != null && ceated.after(lastLogOut));
+    private Boolean isCreatedBeforeLastLogOut(Date created, Date lastLogout) {
+        return (lastLogout != null && created.before(lastLogout));
     }
 
     private Boolean ignoreTokenExpiration(String token) {

@@ -38,5 +38,9 @@ public class PersonalInfoService {
         return true;
     }
 
+    public boolean applyForAuthorityUpdating(String targetAuthority, String id){
+        return true;
+    }
+
 
 }

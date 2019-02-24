@@ -2,13 +2,14 @@ package org.nju.sesta.sams.parameter.activity;
 
 import java.util.Calendar;
 
-public class NewMatchParameter {
+public class NewRecruitmentParameter {
     private String name;
+    private String type;
     private String content;
-    private String way2Register;
     private Calendar regStartDate;
     private Calendar regEndDate;
     private Integer limitedNumber;
+
 
     public String getName() {
         return name;
@@ -18,20 +19,20 @@ public class NewMatchParameter {
         this.name = name;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getWay2Register() {
-        return way2Register;
-    }
-
-    public void setWay2Register(String way2Register) {
-        this.way2Register = way2Register;
     }
 
     public Calendar getRegStartDate() {

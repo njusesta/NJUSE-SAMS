@@ -46,4 +46,5 @@ public class Applicant {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/my")
+@RequestMapping(value = "/info")
 public class PersonalInfoController {
 
     @Autowired
@@ -28,16 +28,16 @@ public class PersonalInfoController {
     @Value("${jwt.header}")
     String tokenHeader;
 
-    @RequestMapping(value = "/",
+    @RequestMapping(value = "/{id}",
             method = RequestMethod.GET,
             produces = {"application/json", "application/xml"})
-    public ResponseEntity<?> getPersonalInfo(HttpServletRequest request) {
-        return ResponseEntity.ok(new PersonalInfoResponse(service.getPersonalInfo(getIdFromRequest(request))));
+    public ResponseEntity<?> getPersonalInfo(@PathVariable String id, HttpServletRequest request) {
+        return ResponseEntity.ok(new PersonalInfoResponse(service.getPersonalInfo(id)));
     }
 
     //需要一个异常处理类
     @RequestMapping(value = "/",
-            method = RequestMethod.POST,
+            method = RequestMethod.PUT,
             produces = {"application/json", "application/xml"})
     public ResponseEntity<?> updatePersonalInfo(@RequestBody BasicInfoParameter parameter, HttpServletRequest request) {
         String id = getIdFromRequest(request);
@@ -69,9 +69,9 @@ public class PersonalInfoController {
 
     @RequestMapping(value = "/authority", method = RequestMethod.POST)
     public ResponseEntity<?> applyForAuthorityUpdating(Map<String, String> param, HttpServletRequest request) {
-        if(param.containsKey("targetAuthority")){
+        if (param.containsKey("targetAuthority")) {
             String id = getIdFromRequest(request);
-            if(service.applyForAuthorityUpdating(param.get("targetAuthority"), id))
+            if (service.applyForAuthorityUpdating(param.get("targetAuthority"), id))
                 return ResponseEntity.ok(null);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);

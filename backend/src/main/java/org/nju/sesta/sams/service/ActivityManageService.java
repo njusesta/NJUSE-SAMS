@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 @Service
 public class ActivityManageService {
     @Autowired
@@ -35,20 +37,20 @@ public class ActivityManageService {
         return true;
     }
 
-    public boolean applyForNewRecruitment(Activity activity, String studentId){
+    public boolean applyForNewRecruitment(Activity activity, String studentId) {
         User user = userRepo.getOne(studentId);
         user.getActivitiesReleased().add(activity);
         userRepo.save(user);
         return true;
     }
 
-    public boolean updateActivity(Activity activity){
+    public boolean updateActivity(Activity activity) {
         activityRepo.save(activity);
         return true;
     }
 
-    public Activity[] getActivityList(){
-        return (Activity[]) activityRepo.findAll(Sort.by(Sort.Direction.DESC,"initDate")).toArray();
+    public Activity[] getActivityList() {
+        return activityRepo.findAll(Sort.by(Sort.Direction.DESC, "initDate")).stream().toArray(Activity[]::new);
     }
 
 
@@ -64,13 +66,13 @@ public class ActivityManageService {
         return true;
     }
 
-    public boolean matchActivityAndUser(Long activityId, String studentId){
+    public boolean matchActivityAndUser(Long activityId, String studentId) {
         Activity activity = activityRepo.getOne(activityId);
         return activity.getCreator().getId() == studentId;
     }
 
-    public Applicant[] getApplicationForm(Long activityId){
-        return (Applicant[])applicantRepo.findAllByActivityId(activityId).toArray();
+    public Applicant[] getApplicationForm(Long activityId) {
+        return (Applicant[]) applicantRepo.findAllByActivityId(activityId).toArray();
     }
 
     public boolean sendApplicationForm(Long activityId, String description, String studentId) {

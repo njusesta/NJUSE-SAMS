@@ -92,7 +92,7 @@ public class AuthenticationController {
 
     @ExceptionHandler({AuthenticationException.class})
     public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
     }
 
     /**

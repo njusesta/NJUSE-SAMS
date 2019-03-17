@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,6 +33,11 @@ public class JwtToken implements Serializable {
 
     @Value("${jwt.expiration}")
     private Long expiration;
+
+    public String getUsernameFromRequest(HttpServletRequest request) {
+        String token = request.getHeader("Authentication").substring(7);
+        return getUsernameFromToken(token);
+    }
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);

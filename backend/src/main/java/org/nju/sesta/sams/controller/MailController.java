@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Map;
 
 @RestController
@@ -19,15 +18,16 @@ public class MailController {
 
     @RequestMapping(value = "/initialization",
             method = RequestMethod.POST)
-    public ResponseEntity<?> initAccount(@RequestBody Map<String, String> param){
-        if(!param.containsKey("id"))
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        try{
-            service.initAccount(param.get("id"));
-            return ResponseEntity.ok(null);
-        }catch (Exception e){
-            e.printStackTrace();
+    public ResponseEntity<?> initAccount(@RequestBody Map<String, String> param) {
+        if (param.containsKey("id")) {
+            try {
+                service.initAccount(param.get("id"));
+                return ResponseEntity.ok(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 }

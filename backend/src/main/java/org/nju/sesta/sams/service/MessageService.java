@@ -2,6 +2,7 @@ package org.nju.sesta.sams.service;
 
 import org.nju.sesta.sams.dao.MessageRepository;
 import org.nju.sesta.sams.entity.Message;
+import org.nju.sesta.sams.exception.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class MessageService {
     }
 
     public Message getMessageDetail(Long id) {
-        return repository.findById(id.longValue());
+        return repository.findById(id).orElseThrow(SystemException::new);
     }
 }
 

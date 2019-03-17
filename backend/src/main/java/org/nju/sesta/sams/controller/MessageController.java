@@ -1,6 +1,5 @@
 package org.nju.sesta.sams.controller;
 
-import org.nju.sesta.sams.entity.User;
 import org.nju.sesta.sams.service.MessageService;
 import org.nju.sesta.sams.util.token.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +28,8 @@ public class MessageController {
 
     @RequestMapping(value = "/check",
             method = RequestMethod.GET)
-    public ResponseEntity<?> checkMessagesUnead(HttpServletRequest request) {
-        String studentId = getUserIdFromRequest(request);
+    public ResponseEntity<?> checkMessagesUnread(HttpServletRequest request) {
+        String studentId = jwtToken.getUsernameFromRequest(request);
         Map<String, Boolean> res = new HashMap<>();
         res.put("haveMessageUnread", service.checkMessageUnread(studentId));
         return ResponseEntity.ok(res);
@@ -39,7 +38,7 @@ public class MessageController {
     @RequestMapping(value = "/list",
             method = RequestMethod.GET)
     public ResponseEntity<?> getMessageList(HttpServletRequest request) {
-        String studentId = getUserIdFromRequest(request);
+        String studentId = jwtToken.getUsernameFromRequest(request);
         return ResponseEntity.ok(service.getMessageList(studentId));
     }
 
@@ -49,9 +48,4 @@ public class MessageController {
         return ResponseEntity.ok(service.getMessageDetail(messageId));
     }
 
-
-    private String getUserIdFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(tokenHeader).substring(7);
-        return jwtToken.getUsernameFromToken(token);
-    }
 }

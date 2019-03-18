@@ -49,7 +49,8 @@ public class User {
 
     @NotNull
     private Boolean enabled = true;
-
+    @NotNull
+    private  Boolean hasBeenExamined=false;
     @Column(name = "last_logout_date")
     @Temporal(TemporalType.DATE)
     private Calendar lastLogoutDate;
@@ -186,5 +187,13 @@ public class User {
 
     public void setActivitiesReleased(List<Activity> activitiesReleased) {
         this.activitiesReleased = activitiesReleased;
+    }
+
+    public Boolean getHasBeenExamined() {
+        return hasBeenExamined;
+    }
+
+    public void setHasBeenExamined(Boolean hasBeenExamined) {
+        this.hasBeenExamined = hasBeenExamined;
     }
 }

@@ -1,7 +1,5 @@
 package org.nju.sesta.sams.response.message;
 
-import org.nju.sesta.sams.entity.Message;
-
 import java.util.Calendar;
 
 public class MessageResponse {

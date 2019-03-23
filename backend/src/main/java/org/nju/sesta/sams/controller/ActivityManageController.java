@@ -1,10 +1,10 @@
 package org.nju.sesta.sams.controller;
 
 import org.nju.sesta.sams.entity.Activity;
-import org.nju.sesta.sams.entity.Applicant;
 import org.nju.sesta.sams.exception.AuthorityException;
-import org.nju.sesta.sams.exception.BasicException;
+import org.nju.sesta.sams.exception.BadFormatException;
 import org.nju.sesta.sams.factory.ActivityFactory;
+import org.nju.sesta.sams.parameter.activity.ExaminationParameter;
 import org.nju.sesta.sams.parameter.activity.NewActivityParameter;
 import org.nju.sesta.sams.parameter.activity.NewMatchParameter;
 import org.nju.sesta.sams.parameter.activity.NewRecruitmentParameter;
@@ -13,8 +13,8 @@ import org.nju.sesta.sams.service.ActivityManageService;
 import org.nju.sesta.sams.util.token.JwtToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,17 +44,6 @@ public class ActivityManageController {
         return ResponseEntity.ok(null);
     }
 
-    @RequestMapping(value = "/activity",
-            method = RequestMethod.PUT)
-    public ResponseEntity<?> updateActivity(@RequestBody Activity activity, HttpServletRequest request) {
-        String studentId = jwtToken.getUsernameFromRequest(request);
-        if (studentId.equals(activity.getCreator().getId())) {
-            service.updateActivity(activity);
-            return ResponseEntity.ok(null);
-        }
-        throw new AuthorityException();
-    }
-
     @RequestMapping(value = "/activity/new",
             method = RequestMethod.POST)
     public ResponseEntity<?> applyForNewActivity(@RequestBody NewActivityParameter param, HttpServletRequest request) {
@@ -75,10 +64,29 @@ public class ActivityManageController {
         return ResponseEntity.ok(null);
     }
 
+    @RequestMapping(value = "/activity",
+            method = RequestMethod.PUT)
+    public ResponseEntity<?> updateActivity(@RequestBody Activity activity, HttpServletRequest request) {
+        String studentId = jwtToken.getUsernameFromRequest(request);
+        if (studentId.equals(activity.getCreator().getId())) {
+            service.updateActivity(activity);
+            return ResponseEntity.ok(null);
+        }
+        throw new AuthorityException();
+    }
+
     @RequestMapping(value = "/list",
             method = RequestMethod.GET)
-    public ResponseEntity<?> getActivityList() {
-        Activity[] activities = service.getActivityList();
+    public ResponseEntity<?> getAvailableActivityList() {
+        Activity[] activities = service.getAvailableActivityList();
+        return ResponseEntity.ok(activities);
+    }
+
+    @RequestMapping(value = "/unexamined",
+            method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> getActivityUnexamined() {
+        Activity[] activities = service.getActivityUnexamined();
         return ResponseEntity.ok(activities);
     }
 
@@ -93,6 +101,14 @@ public class ActivityManageController {
     public ResponseEntity<?> signUpForActivity(@PathVariable Long id, HttpServletRequest request) {
         String studentId = jwtToken.getUsernameFromRequest(request);
         service.signUpForActivity(id, studentId);
+        return ResponseEntity.ok(null);
+    }
+
+    @RequestMapping(value = "/examination",
+            method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> examineActivity(@RequestBody ExaminationParameter param, HttpServletRequest request) {
+        service.examineActivity(param.getActivityId(), param.getDecision());
         return ResponseEntity.ok(null);
     }
 

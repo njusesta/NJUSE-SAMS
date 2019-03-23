@@ -9,7 +9,7 @@ import java.util.Calendar;
 public class DevAxFormItem {
     @Id
     @NotNull
-    @Column(name = "Id", unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull

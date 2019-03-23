@@ -1,12 +1,12 @@
 package org.nju.sesta.sams.entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "tbl_group")
 public class Group {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

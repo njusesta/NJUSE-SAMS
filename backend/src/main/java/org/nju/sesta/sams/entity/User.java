@@ -4,7 +4,6 @@ import org.nju.sesta.sams.response.personalInfo.ContactInformation;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

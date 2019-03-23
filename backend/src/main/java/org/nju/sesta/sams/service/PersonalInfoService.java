@@ -1,45 +1,85 @@
 package org.nju.sesta.sams.service;
 
+import org.nju.sesta.sams.dao.AuthUpReqRepository;
+import org.nju.sesta.sams.dao.MessageRepository;
+import org.nju.sesta.sams.dao.RoleRepository;
 import org.nju.sesta.sams.dao.UserRepository;
+import org.nju.sesta.sams.entity.AuthUpRequest;
+import org.nju.sesta.sams.entity.Message;
+import org.nju.sesta.sams.entity.Role;
 import org.nju.sesta.sams.entity.User;
+import org.nju.sesta.sams.enums.RoleName;
 import org.nju.sesta.sams.parameter.PersonalInfo.ActivityInfoParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.BasicInfoParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.DevFormInfoParameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PersonalInfoService {
     @Autowired
-    UserRepository repository;
+    UserRepository userRepo;
+
+    @Autowired
+    RoleRepository roleRepo;
+
+    @Autowired
+    MessageRepository messageRepo;
+
+    @Autowired
+    AuthUpReqRepository authUpReqRepo;
+
 
     public User getPersonalInfo(String id) {
-        return repository.findByEmail(id);
+        return userRepo.findByEmail(id);
     }
 
-    public boolean updateBasicInfo(String id, BasicInfoParameter parameter) {
-        int rowsAffected = repository.updateBasicInfo(parameter.getName(), parameter.getContactInformation(), parameter.getClazz(), id);
-        return rowsAffected != 0;
+    public void updateBasicInfo(String id, BasicInfoParameter parameter) {
+        userRepo.updateBasicInfo(parameter.getName(), parameter.getContactInformation(), parameter.getClazz(), id);
     }
 
-    public boolean updateActivityInfo(String id, ActivityInfoParameter parameter) {
-        User user = repository.getOne(id);
+    public void applyForAuthUpdating(RoleName targetRole, String id) {
+        AuthUpRequest request = new AuthUpRequest();
+        request.setStudentId(id);
+        request.setTargetRole(targetRole);
+        authUpReqRepo.save(request);//这里没有做各种检验;
+    }
+
+    public AuthUpRequest[] getAuthUpRequests() {
+        return authUpReqRepo.findAll(Sort.by(Sort.Direction.DESC, "releasedDate"))
+                .stream()
+                .toArray(AuthUpRequest[]::new);
+    }
+
+    public void processAuthUpRequest(Long id, Boolean decision) {
+        AuthUpRequest request = authUpReqRepo.findById(id).get();
+        if (decision) {//这部分的写法存疑，涉及多对多实体的存储
+            User u = userRepo.findById(request.getStudentId()).get();
+            Role role = roleRepo.findByRoleName(request.getTargetRole()).get(0);
+            List<Role> roles = u.getRoles();
+            roles.add(role);
+            userRepo.save(u);
+        }
+        authUpReqRepo.delete(request);
+        Message message = new Message();
+        message.setStudentId(request.getStudentId());
+        message.setContent("你的权限申请请求已处理，结果为:" + (decision ? "接受" : "拒绝"));
+        messageRepo.save(message);
+    }
+
+    public void updateActivityInfo(String id, ActivityInfoParameter parameter) {
+        User user = userRepo.getOne(id);
         user.setActivitiesJoined(parameter.getActivities());
-        repository.save(user);
-//        int rowsAffected =repository.updateActivityInfo(parameter.getActivities(), id);
-        return true;
+        userRepo.save(user);
     }
 
-    public boolean updateDevAxFormInfo(String id, DevFormInfoParameter parameter) {
-        User user = repository.getOne(id);
+    public void updateDevAxFormInfo(String id, DevFormInfoParameter parameter) {
+        User user = userRepo.getOne(id);
         user.setDevAxForm(parameter.getDevAxForm());
-        repository.save(user);
-//        int rowsAffected = repository.updateDevAxFormInfo(parameter.getDevAxForm(), id);
-        return true;
-    }
-
-    public boolean applyForAuthorityUpdating(String targetAuthority, String id){
-        return true;
+        userRepo.save(user);
     }
 
 

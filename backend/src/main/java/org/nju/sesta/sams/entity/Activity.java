@@ -55,6 +55,9 @@ public class Activity {
             cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "belongTo")
     private List<Group> groups;
 
+    @Column(length = 10)
+    private Boolean passed;
+
 
     public long getId() {
         return id;
@@ -158,5 +161,13 @@ public class Activity {
 
     public void setInitDate(Calendar initDate) {
         this.initDate = initDate;
+    }
+
+    public Boolean getPassed() {
+        return passed;
+    }
+
+    public void setPassed(Boolean passed) {
+        this.passed = passed;
     }
 }

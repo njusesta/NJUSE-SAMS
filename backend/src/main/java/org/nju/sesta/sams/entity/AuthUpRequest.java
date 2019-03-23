@@ -1,28 +1,22 @@
 package org.nju.sesta.sams.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.nju.sesta.sams.enums.RoleName;
 
 import javax.persistence.*;
 import java.util.Calendar;
 
 @Entity
-@Table(name = "tbl_message")
-public class Message {
+@Table(name = "tbl_auth_up_request")
+public class AuthUpRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
     private String studentId;
 
-    private String title;
+    private RoleName targetRole;
 
-    private String content;
-
-    @Temporal(TemporalType.DATE)
     private Calendar releasedTime;
-
-    private Boolean isRead;
 
     public Long getId() {
         return id;
@@ -40,20 +34,12 @@ public class Message {
         this.studentId = studentId;
     }
 
-    public String getTitle() {
-        return title;
+    public RoleName getTargetRole() {
+        return targetRole;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    public void setTargetRole(RoleName targetRole) {
+        this.targetRole = targetRole;
     }
 
     public Calendar getReleasedTime() {
@@ -64,16 +50,7 @@ public class Message {
         this.releasedTime = releasedTime;
     }
 
-    public Boolean getRead() {
-        return isRead;
-    }
-
-    public void setRead(Boolean read) {
-        isRead = read;
-    }
-
-    public Message() {
+    public AuthUpRequest() {
         releasedTime = Calendar.getInstance();
-        isRead = false;
     }
 }

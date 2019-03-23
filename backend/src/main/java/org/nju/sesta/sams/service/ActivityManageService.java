@@ -6,11 +6,10 @@ import org.nju.sesta.sams.dao.UserRepository;
 import org.nju.sesta.sams.entity.Activity;
 import org.nju.sesta.sams.entity.Applicant;
 import org.nju.sesta.sams.entity.User;
+import org.nju.sesta.sams.exception.BadStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
 
 @Service
 public class ActivityManageService {
@@ -23,34 +22,40 @@ public class ActivityManageService {
     @Autowired
     ApplicantRepository applicantRepo;
 
-    public boolean applyForNewMatch(Activity activity, String studentId) {
+    public void applyForNewMatch(Activity activity, String studentId) {
         User user = userRepo.getOne(studentId);
         user.getActivitiesReleased().add(activity);
         userRepo.save(user);
-        return true;
     }
 
-    public boolean applyForNewActivity(Activity activity, String studentId) {
+    public void applyForNewActivity(Activity activity, String studentId) {
         User user = userRepo.getOne(studentId);
         user.getActivitiesReleased().add(activity);
         userRepo.save(user);
-        return true;
     }
 
-    public boolean applyForNewRecruitment(Activity activity, String studentId) {
+    public void applyForNewRecruitment(Activity activity, String studentId) {
         User user = userRepo.getOne(studentId);
         user.getActivitiesReleased().add(activity);
         userRepo.save(user);
-        return true;
     }
 
-    public boolean updateActivity(Activity activity) {
+    public void updateActivity(Activity activity) {
         activityRepo.save(activity);
-        return true;
     }
 
-    public Activity[] getActivityList() {
-        return activityRepo.findAll(Sort.by(Sort.Direction.DESC, "initDate")).stream().toArray(Activity[]::new);
+    public Activity[] getAvailableActivityList() {
+        return activityRepo.findAll(Sort.by(Sort.Direction.DESC, "initDate"))
+                .stream()
+                .filter(Activity::getPassed)
+                .toArray(Activity[]::new);
+    }
+
+    public Activity[] getActivityUnexamined() {
+        return activityRepo.findAll(Sort.by(Sort.Direction.DESC, "initDate"))
+                .stream()
+                .filter(o -> o.getPassed() == null)
+                .toArray(Activity[]::new);
     }
 
 
@@ -58,29 +63,40 @@ public class ActivityManageService {
         return activityRepo.getOne(id);
     }
 
-    public boolean signUpForActivity(Long id, String studentId) {
+    public void signUpForActivity(Long id, String studentId) {
         User u = userRepo.getOne(studentId);
         Activity a = activityRepo.getOne(id);
+        if (u.getActivitiesJoined()
+                .stream()
+                .map(Activity::getId)
+                .anyMatch(o -> o == id))
+            throw new BadStateException();
         u.getActivitiesJoined().add(a);
         userRepo.save(u);
-        return true;
     }
 
-    public boolean matchActivityAndUser(Long activityId, String studentId) {
-        Activity activity = activityRepo.getOne(activityId);
-        return activity.getCreator().getId() == studentId;
+    public void matchActivityAndUser(Long activityId, String studentId) {
+        Activity activity = activityRepo.findById(activityId).get();
+        if (!activity.getCreator().getId().equals(studentId))
+            throw new BadStateException();
+    }
+
+    public void examineActivity(Long activityId, Boolean decision) {
+        Activity activity = activityRepo.findById(activityId).get();
+        activity.setPassed(decision);
+        activityRepo.save(activity);
+
     }
 
     public Applicant[] getApplicationForm(Long activityId) {
-        return (Applicant[]) applicantRepo.findAllByActivityId(activityId).toArray();
+        return applicantRepo.findAllByActivityId(activityId).stream().toArray(Applicant[]::new);
     }
 
-    public boolean sendApplicationForm(Long activityId, String description, String studentId) {
+    public void sendApplicationForm(Long activityId, String description, String studentId) {
         Applicant applicant = new Applicant();
         applicant.setActivityId(activityId);
         applicant.setDescription(description);
         applicant.setStudentId(studentId);
         applicantRepo.save(applicant);
-        return true;
     }
 }

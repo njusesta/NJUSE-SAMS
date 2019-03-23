@@ -1,7 +1,10 @@
 package org.nju.sesta.sams.controller;
 
+import org.nju.sesta.sams.entity.AuthUpRequest;
+import org.nju.sesta.sams.enums.RoleName;
 import org.nju.sesta.sams.exception.AuthorityException;
 import org.nju.sesta.sams.exception.BasicException;
+import org.nju.sesta.sams.parameter.PersonalInfo.AuthUpProcessParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.BasicInfoParameter;
 import org.nju.sesta.sams.response.personalInfo.PersonalInfoResponse;
 import org.nju.sesta.sams.service.PersonalInfoService;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,10 +48,26 @@ public class PersonalInfoController {
         return ResponseEntity.ok(null);
     }
 
-    @RequestMapping(value = "/authority", method = RequestMethod.POST)
-    public ResponseEntity<?> applyForAuthorityUpdating(Map<String, String> param, HttpServletRequest request) {
+    @RequestMapping(value = "/authority",
+            method = RequestMethod.POST)
+    public ResponseEntity<?> applyForAuthUpdating(Map<String, String> param, HttpServletRequest request) {
         String id = jwtToken.getUsernameFromRequest(request);
-        service.applyForAuthorityUpdating(param.get("targetAuthority"), id);
+        service.applyForAuthUpdating(RoleName.valueOf(param.get("targetAuthority")), id);
+        return ResponseEntity.ok(null);
+    }
+
+    @RequestMapping(value = "/authority/requests",
+            method = RequestMethod.GET)
+    public ResponseEntity<?> getAuthUpRequests() {
+        AuthUpRequest[] requests = service.getAuthUpRequests();
+        return ResponseEntity.ok(requests);
+    }
+
+    @RequestMapping(value = "/authority",
+            method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> processAuthUpRequest(@RequestBody AuthUpProcessParameter param) {
+        service.processAuthUpRequest(param.getId(), param.getDecision());
         return ResponseEntity.ok(null);
     }
 

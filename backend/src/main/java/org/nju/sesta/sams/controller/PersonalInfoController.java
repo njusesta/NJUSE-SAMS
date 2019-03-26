@@ -1,6 +1,7 @@
 package org.nju.sesta.sams.controller;
 
 import org.nju.sesta.sams.entity.AuthUpRequest;
+import org.nju.sesta.sams.entity.DevAxFormItem;
 import org.nju.sesta.sams.enums.RoleName;
 import org.nju.sesta.sams.exception.AuthorityException;
 import org.nju.sesta.sams.exception.BasicException;
@@ -17,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.parser.Entity;
 import java.util.Map;
 
 @RestController
@@ -63,6 +65,13 @@ public class PersonalInfoController {
         return ResponseEntity.ok(requests);
     }
 
+    @RequestMapping(value = "devAxForm",
+            method = RequestMethod.GET)
+    public ResponseEntity<?> getDevAxForm(HttpServletRequest request){
+        String id=jwtToken.getUsernameFromRequest(request);
+        DevAxFormItem[] items=service.getDev(id);
+        return ResponseEntity.ok(items);
+    }
     @RequestMapping(value = "/authority",
             method = RequestMethod.PUT)
     @PreAuthorize("hasRole('ADMIN')")

@@ -53,6 +53,12 @@ public class PersonalInfoService {
     public DevAxFormItem[] getDev(String id){
         return userRepo.findById(id).get().getDevAxForm().toArray(DevAxFormItem[]::new);
     }
+    public Activity[] getActivityJoined(String id){
+        return userRepo.findById(id).get().getActivitiesJoined().toArray(Activity[]::new);
+    }
+    public Activity[] getActivieReleased(String id){
+        return userRepo.findById(id).get().getActivitiesReleased().toArray(Activity[]::new);
+    }
 
     public void processAuthUpRequest(Long id, Boolean decision) {
         AuthUpRequest request = authUpReqRepo.findById(id).get();

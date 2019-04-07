@@ -8,7 +8,7 @@ import org.nju.sesta.sams.parameter.PersonalInfo.AuthUpProcessParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.BasicInfoParameter;
 import org.nju.sesta.sams.response.personalInfo.PersonalInfoResponse;
 import org.nju.sesta.sams.service.PersonalInfoService;
-import org.nju.sesta.sams.util.token.JwtToken;
+import org.nju.sesta.sams.util.token.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,7 @@ public class PersonalInfoController {
     PersonalInfoService service;
 
     @Autowired
-    JwtToken jwtToken;
+    JwtUtil jwtUtil;
 
     @Value("${jwt.header}")
     String tokenHeader;
@@ -35,7 +35,7 @@ public class PersonalInfoController {
     @RequestMapping(value = "/{id}",
             method = RequestMethod.GET)
     public ResponseEntity<?> getPersonalInfo(@PathVariable String id, HttpServletRequest request) {
-        if (!id.equals(jwtToken.getUsernameFromRequest(request)))
+        if (!id.equals(jwtUtil.getUsernameFromRequest(request)))
             throw new AuthorityException();
         return ResponseEntity.ok(new PersonalInfoResponse(service.getPersonalInfo(id)));
     }
@@ -43,7 +43,7 @@ public class PersonalInfoController {
     @RequestMapping(value = "/",
             method = RequestMethod.PUT)
     public ResponseEntity<?> updatePersonalInfo(@RequestBody BasicInfoParameter parameter, HttpServletRequest request) {
-        String id = jwtToken.getUsernameFromRequest(request);
+        String id = jwtUtil.getUsernameFromRequest(request);
         service.updateBasicInfo(id, parameter);
         return ResponseEntity.ok(null);
     }
@@ -51,7 +51,7 @@ public class PersonalInfoController {
     @RequestMapping(value = "/authority",
             method = RequestMethod.POST)
     public ResponseEntity<?> applyForAuthUpdating(Map<String, String> param, HttpServletRequest request) {
-        String id = jwtToken.getUsernameFromRequest(request);
+        String id = jwtUtil.getUsernameFromRequest(request);
         service.applyForAuthUpdating(RoleName.valueOf(param.get("targetAuthority")), id);
         return ResponseEntity.ok(null);
     }

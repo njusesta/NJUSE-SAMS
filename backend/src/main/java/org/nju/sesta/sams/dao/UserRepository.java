@@ -1,7 +1,5 @@
 package org.nju.sesta.sams.dao;
 
-import org.nju.sesta.sams.entity.Activity;
-import org.nju.sesta.sams.entity.DevAxFormItem;
 import org.nju.sesta.sams.entity.User;
 import org.nju.sesta.sams.response.personalInfo.ContactInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Calendar;
-import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
@@ -21,8 +18,8 @@ public interface UserRepository extends JpaRepository<User, String> {
     int updateLastLogoutDate(Calendar now, String id);
 
     @Modifying
-    @Query("update User u set u.passwordHash=?1, u.lastPasswordResetDate = ?2 where u.id = ?3")
-    int resetPassword(String passwordEncoded, Calendar now, String id);
+    @Query("update User u set u.passwordEncrypted=?1, u.lastPasswordResetDate = ?2 where u.id = ?3")
+    int resetPassword(String passwordEncrypted, Calendar now, String id);
 
     //需要研究自定义
     @Modifying

@@ -11,7 +11,6 @@ import java.util.Set;
 @Table(name = "tbl_role")
 public class Role {
     @Id
-    @NotNull
     @Column(length = 50)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +21,7 @@ public class Role {
     private RoleName roleName;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private Set<org.nju.sesta.sams.entity.User> users = new HashSet<User>();
+    private Set<User> users = new HashSet<User>();
 
     public Long getId() {
         return id;

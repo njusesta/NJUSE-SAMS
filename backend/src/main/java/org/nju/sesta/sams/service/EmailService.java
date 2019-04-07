@@ -62,7 +62,7 @@ public class EmailService {
 
         User user = new User();
         user.setId(id);
-        user.setPasswordHash(passwordHash);
+        user.setPasswordEncrypted(passwordHash);
         user.setEmail(emailAddress);
         user.setGrade(id.substring(0, 2));
         Role role = new Role();

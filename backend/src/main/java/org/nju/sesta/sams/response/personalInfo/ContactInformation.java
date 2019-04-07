@@ -14,6 +14,21 @@ public class ContactInformation {
         this.wcNumber = wcNumber;
     }
 
+    public ContactInformation() {
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setQqNumber(String qqNumber) {
+        this.qqNumber = qqNumber;
+    }
+
+    public void setWcNumber(String wcNumber) {
+        this.wcNumber = wcNumber;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }

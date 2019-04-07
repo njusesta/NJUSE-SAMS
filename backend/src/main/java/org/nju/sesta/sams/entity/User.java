@@ -18,7 +18,7 @@ public class User {
     private String id;
 
     @NotNull
-    private String passwordHash;
+    private String passwordEncrypted;
 
     @NotNull
     @Column(unique = true)
@@ -132,12 +132,12 @@ public class User {
         DevAxForm = devAxForm;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+    public String getPasswordEncrypted() {
+        return passwordEncrypted;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
+    public void setPasswordEncrypted(String passwordEncrypted) {
+        this.passwordEncrypted = passwordEncrypted;
     }
 
     public Boolean getEnabled() {

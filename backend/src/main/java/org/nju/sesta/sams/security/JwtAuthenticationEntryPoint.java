@@ -20,7 +20,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
                          AuthenticationException authException) throws IOException {
         // This is invoked when user tries to access a secured REST resource without supplying any credentials
         // We should just send a 401 Unauthorized response because there is no 'login page' to redirect to
-        //应重定向到登录界面
-        response.sendRedirect("loginPage");
+//        response.sendRedirect("loginPage");
     }
 }

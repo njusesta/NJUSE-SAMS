@@ -5,11 +5,10 @@ import org.nju.sesta.sams.exception.AuthenticationException;
 import org.nju.sesta.sams.parameter.authentication.JwtAuthenticationParameter;
 import org.nju.sesta.sams.response.authentication.JwtAuthenticationResponse;
 import org.nju.sesta.sams.security.JwtUser;
-import org.nju.sesta.sams.util.token.JwtToken;
+import org.nju.sesta.sams.util.token.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,7 +36,7 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtToken jwtToken;
+    private JwtUtil jwtUtil;
 
     @Autowired
     @Qualifier("jwtUserDetailsService")
@@ -69,7 +68,7 @@ public class AuthenticationController {
 
         // Reload password post-security so we can generate the token
         final UserDetails userDetails = userDetailsService.loadUserByUsername(parameter.getUsername());
-        final String token = jwtToken.generateToken(userDetails);
+        final String token = jwtUtil.generateToken(userDetails);
 
         // Return the token
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
@@ -79,21 +78,21 @@ public class AuthenticationController {
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String authToken = request.getHeader(tokenHeader);
         final String token = authToken.substring(7);
-        String username = jwtToken.getUsernameFromToken(token);
+        String username = jwtUtil.getUsernameFromToken(token);
         JwtUser jwtUser = (JwtUser) userDetailsService.loadUserByUsername(username);
 
-        if (jwtToken.canTokenBeRefreshed(token, jwtUser.getLastPasswordResetDate().getTime())) {
-            String refreshedToken = jwtToken.refreshToken(token);
+        if (jwtUtil.canTokenBeRefreshed(token, jwtUser.getLastPasswordResetDate().getTime())) {
+            String refreshedToken = jwtUtil.refreshToken(token);
             return ResponseEntity.ok(new JwtAuthenticationResponse(refreshedToken));
         } else {
             return ResponseEntity.badRequest().body(null);
         }
     }
 
-    @ExceptionHandler({AuthenticationException.class})
-    public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
-    }
+//    @ExceptionHandler({AuthenticationException.class})
+//    public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
+//        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+//    }
 
     /**
      * 认证用户(等于登录). 如果出现错误,  {@link AuthenticationException} 认证异常会被抛出

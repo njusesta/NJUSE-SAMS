@@ -1,7 +1,7 @@
 package org.nju.sesta.sams.controller;
 
 import org.nju.sesta.sams.service.MessageService;
-import org.nju.sesta.sams.util.token.JwtToken;
+import org.nju.sesta.sams.util.token.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class MessageController {
     MessageService service;
 
     @Autowired
-    JwtToken jwtToken;
+    JwtUtil jwtUtil;
 
     @Value("${jwt.header}")
     String tokenHeader;
@@ -29,7 +29,7 @@ public class MessageController {
     @RequestMapping(value = "/check",
             method = RequestMethod.GET)
     public ResponseEntity<?> checkMessagesUnread(HttpServletRequest request) {
-        String studentId = jwtToken.getUsernameFromRequest(request);
+        String studentId = jwtUtil.getUsernameFromRequest(request);
         Map<String, Boolean> res = new HashMap<>();
         res.put("haveMessageUnread", service.checkMessageUnread(studentId));
         return ResponseEntity.ok(res);
@@ -38,7 +38,7 @@ public class MessageController {
     @RequestMapping(value = "/list",
             method = RequestMethod.GET)
     public ResponseEntity<?> getMessageList(HttpServletRequest request) {
-        String studentId = jwtToken.getUsernameFromRequest(request);
+        String studentId = jwtUtil.getUsernameFromRequest(request);
         return ResponseEntity.ok(service.getMessageList(studentId));
     }
 

@@ -1,9 +1,10 @@
 package org.nju.sesta.sams.filter;
 
 import io.jsonwebtoken.ExpiredJwtException;
-import org.nju.sesta.sams.util.token.JwtToken;
+import org.nju.sesta.sams.util.token.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,12 +28,12 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final UserDetailsService userDetailsService;
-    private final JwtToken jwtToken;
+    private final JwtUtil jwtUtil;
     private final String tokenHeader;
 
-    public JwtAuthorizationTokenFilter(UserDetailsService userDetailsService, JwtToken jwtToken, @Value("${jwt.header}") String tokenHeader) {
+    public JwtAuthorizationTokenFilter(@Qualifier("jwtUserDetailsService") UserDetailsService userDetailsService, JwtUtil jwtUtil, @Value("${jwt.header}") String tokenHeader) {
         this.userDetailsService = userDetailsService;
-        this.jwtToken = jwtToken;
+        this.jwtUtil = jwtUtil;
         this.tokenHeader = tokenHeader;
     }
 
@@ -47,7 +48,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             authToken = requestHeader.substring(7);
             try {
-                username = jwtToken.getUsernameFromToken(authToken);
+                username = jwtUtil.getUsernameFromToken(authToken);
             } catch (IllegalArgumentException e) {
                 logger.error("an error occured during getting username from token", e);
             } catch (ExpiredJwtException e) {
@@ -67,7 +68,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
 
             // For simple validation it is completely sufficient to just check the token integrity. You don't have to call
             // the database compellingly. Again it's up to you ;)
-            if (jwtToken.validateToken(authToken, userDetails)) {
+            if (jwtUtil.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 logger.info("authorizated user '{}', setting security context", username);

@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-public class JwtToken implements Serializable {
+public class JwtUtil implements Serializable {
 
     static final String CLAIM_KEY_USERNAME = "sub";
     static final String CLAIM_KEY_CREATED = "iat";

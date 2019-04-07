@@ -1,6 +1,7 @@
 package org.nju.sesta.sams.entity;
 
 import org.nju.sesta.sams.response.personalInfo.ContactInformation;
+import org.springframework.context.annotation.Lazy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tbl_user")
+@Lazy(value = false)
 public class User {
 
     @Id
@@ -58,7 +60,7 @@ public class User {
     @Temporal(TemporalType.DATE)
     private Calendar lastPasswordResetDate;
 
-    @ManyToMany(fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_activity",
@@ -69,7 +71,7 @@ public class User {
 
     @OneToMany(targetEntity = Activity.class,
             cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, mappedBy = "creator")
+            fetch = FetchType.EAGER, mappedBy = "creator")
     private List<Activity> activitiesReleased = new ArrayList<Activity>();
 
     @OneToMany(targetEntity = DevAxFormItem.class,

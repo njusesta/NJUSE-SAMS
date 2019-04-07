@@ -59,7 +59,7 @@ public class Activity {
     private Boolean passed;
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

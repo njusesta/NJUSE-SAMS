@@ -1,4 +1,4 @@
-package org.nju.sesta.sams.inition;
+package org.nju.sesta.sams.initialization;
 
 
 import org.nju.sesta.sams.dao.ActivityRepository;

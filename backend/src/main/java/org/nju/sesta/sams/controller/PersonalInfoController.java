@@ -22,7 +22,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.parser.Entity;
 import java.util.Map;
 
 @RestController
@@ -73,14 +72,14 @@ public class PersonalInfoController {
     @RequestMapping(value = "/activitiesJoined/list",
     method = RequestMethod.GET)
     public ResponseEntity<?> getActivitiesJoined(HttpServletRequest request){
-        String id = jwtToken.getUsernameFromRequest(request);
+        String id = jwtUtil.getUsernameFromRequest(request);
         Activity[] activities=service.getActivityJoined(id);
         return ResponseEntity.ok(activities);
     }
     @RequestMapping(value = "/activitiesReleased/list",
     method = RequestMethod.GET)
     public ResponseEntity<?> getActivitiesReleased(HttpServletRequest request){
-        String id = jwtToken.getUsernameFromRequest(request);
+        String id = jwtUtil.getUsernameFromRequest(request);
         Activity[] activities=service.getActivieReleased(id);
         return ResponseEntity.ok(activities);
     }
@@ -93,14 +92,14 @@ public class PersonalInfoController {
     @RequestMapping(value = "/devAxForm",
             method = RequestMethod.GET)
     public ResponseEntity<?> getDevAxForm(HttpServletRequest request){
-        String id=jwtToken.getUsernameFromRequest(request);
+        String id = jwtUtil.getUsernameFromRequest(request);
         DevAxFormItem[] items=service.getDev(id);
         return ResponseEntity.ok(items);
     }
     @RequestMapping(value = "/devAxForm",
             method = RequestMethod.PUT)
     public ResponseEntity<?>  updateDevAxForm(@RequestBody DevFormInfoParameter devAxFormItems, HttpServletRequest request){
-            String id=jwtToken.getUsernameFromRequest(request);
+        String id = jwtUtil.getUsernameFromRequest(request);
             service.updateDevAxFormInfo(id,devAxFormItems);
             return ResponseEntity.ok(null);
     }

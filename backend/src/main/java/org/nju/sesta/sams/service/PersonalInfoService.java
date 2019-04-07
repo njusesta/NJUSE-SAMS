@@ -50,14 +50,17 @@ public class PersonalInfoService {
                 .stream()
                 .toArray(AuthUpRequest[]::new);
     }
-    public DevAxFormItem[] getDev(String id){
-        return userRepo.findById(id).get().getDevAxForm().toArray(DevAxFormItem[]::new);
+
+    public DevAxFormItem[] getDev(String id) {
+        return userRepo.findById(id).get().getDevAxForm().stream().toArray(DevAxFormItem[]::new);
     }
-    public Activity[] getActivityJoined(String id){
-        return userRepo.findById(id).get().getActivitiesJoined().toArray(Activity[]::new);
+
+    public Activity[] getActivityJoined(String id) {
+        return userRepo.findById(id).get().getActivitiesJoined().stream().toArray(Activity[]::new);
     }
-    public Activity[] getActivieReleased(String id){
-        return userRepo.findById(id).get().getActivitiesReleased().toArray(Activity[]::new);
+
+    public Activity[] getActivieReleased(String id) {
+        return userRepo.findById(id).get().getActivitiesReleased().stream().toArray(Activity[]::new);
     }
 
     public void processAuthUpRequest(Long id, Boolean decision) {

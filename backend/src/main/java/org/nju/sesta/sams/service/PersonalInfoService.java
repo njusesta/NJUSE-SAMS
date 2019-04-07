@@ -4,10 +4,7 @@ import org.nju.sesta.sams.dao.AuthUpReqRepository;
 import org.nju.sesta.sams.dao.MessageRepository;
 import org.nju.sesta.sams.dao.RoleRepository;
 import org.nju.sesta.sams.dao.UserRepository;
-import org.nju.sesta.sams.entity.AuthUpRequest;
-import org.nju.sesta.sams.entity.Message;
-import org.nju.sesta.sams.entity.Role;
-import org.nju.sesta.sams.entity.User;
+import org.nju.sesta.sams.entity.*;
 import org.nju.sesta.sams.enums.RoleName;
 import org.nju.sesta.sams.parameter.PersonalInfo.ActivityInfoParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.BasicInfoParameter;
@@ -52,6 +49,15 @@ public class PersonalInfoService {
         return authUpReqRepo.findAll(Sort.by(Sort.Direction.DESC, "releasedDate"))
                 .stream()
                 .toArray(AuthUpRequest[]::new);
+    }
+    public DevAxFormItem[] getDev(String id){
+        return userRepo.findById(id).get().getDevAxForm().toArray(DevAxFormItem[]::new);
+    }
+    public Activity[] getActivityJoined(String id){
+        return userRepo.findById(id).get().getActivitiesJoined().toArray(Activity[]::new);
+    }
+    public Activity[] getActivieReleased(String id){
+        return userRepo.findById(id).get().getActivitiesReleased().toArray(Activity[]::new);
     }
 
     public void processAuthUpRequest(Long id, Boolean decision) {

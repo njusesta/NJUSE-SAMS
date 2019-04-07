@@ -1,12 +1,17 @@
 package org.nju.sesta.sams.controller;
 
+import org.nju.sesta.sams.entity.Activity;
 import org.nju.sesta.sams.entity.AuthUpRequest;
+import org.nju.sesta.sams.entity.DevAxFormItem;
 import org.nju.sesta.sams.enums.RoleName;
 import org.nju.sesta.sams.exception.AuthorityException;
 import org.nju.sesta.sams.exception.BasicException;
 import org.nju.sesta.sams.parameter.PersonalInfo.AuthUpProcessParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.BasicInfoParameter;
+import org.nju.sesta.sams.parameter.PersonalInfo.DevFormInfoParameter;
+import org.nju.sesta.sams.response.activityInfo.ActivityInfoResponse;
 import org.nju.sesta.sams.response.personalInfo.PersonalInfoResponse;
+import org.nju.sesta.sams.service.ActivityManageService;
 import org.nju.sesta.sams.service.PersonalInfoService;
 import org.nju.sesta.sams.util.token.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.parser.Entity;
 import java.util.Map;
 
 @RestController
@@ -25,6 +31,8 @@ public class PersonalInfoController {
 
     @Autowired
     PersonalInfoService service;
+    @Autowired
+    ActivityManageService activityManageService;
 
     @Autowired
     JwtUtil jwtUtil;
@@ -62,7 +70,40 @@ public class PersonalInfoController {
         AuthUpRequest[] requests = service.getAuthUpRequests();
         return ResponseEntity.ok(requests);
     }
+    @RequestMapping(value = "/activitiesJoined/list",
+    method = RequestMethod.GET)
+    public ResponseEntity<?> getActivitiesJoined(HttpServletRequest request){
+        String id = jwtToken.getUsernameFromRequest(request);
+        Activity[] activities=service.getActivityJoined(id);
+        return ResponseEntity.ok(activities);
+    }
+    @RequestMapping(value = "/activitiesReleased/list",
+    method = RequestMethod.GET)
+    public ResponseEntity<?> getActivitiesReleased(HttpServletRequest request){
+        String id = jwtToken.getUsernameFromRequest(request);
+        Activity[] activities=service.getActivieReleased(id);
+        return ResponseEntity.ok(activities);
+    }
+    @RequestMapping(value = "/activity/{activityId}",
+    method = RequestMethod.GET)
+    public  ResponseEntity<?> getActivityDetail(@PathVariable String activity){
+       return ResponseEntity.ok(new ActivityInfoResponse(activityManageService.getActivityDetail(Long.parseLong(activity))));
+    }
 
+    @RequestMapping(value = "/devAxForm",
+            method = RequestMethod.GET)
+    public ResponseEntity<?> getDevAxForm(HttpServletRequest request){
+        String id=jwtToken.getUsernameFromRequest(request);
+        DevAxFormItem[] items=service.getDev(id);
+        return ResponseEntity.ok(items);
+    }
+    @RequestMapping(value = "/devAxForm",
+            method = RequestMethod.PUT)
+    public ResponseEntity<?>  updateDevAxForm(@RequestBody DevFormInfoParameter devAxFormItems, HttpServletRequest request){
+            String id=jwtToken.getUsernameFromRequest(request);
+            service.updateDevAxFormInfo(id,devAxFormItems);
+            return ResponseEntity.ok(null);
+    }
     @RequestMapping(value = "/authority",
             method = RequestMethod.PUT)
     @PreAuthorize("hasRole('ADMIN')")

@@ -59,7 +59,7 @@ public class PersonalInfoService {
         return userRepo.findById(id).get().getActivitiesJoined().stream().toArray(Activity[]::new);
     }
 
-    public Activity[] getActivieReleased(String id) {
+    public Activity[] getActivityReleased(String id) {
         return userRepo.findById(id).get().getActivitiesReleased().stream().toArray(Activity[]::new);
     }
 
@@ -80,13 +80,13 @@ public class PersonalInfoService {
     }
 
     public void updateActivityInfo(String id, ActivityInfoParameter parameter) {
-        User user = userRepo.getOne(id);
+        User user = userRepo.findById(id).get();
         user.setActivitiesJoined(parameter.getActivities());
         userRepo.save(user);
     }
 
     public void updateDevAxFormInfo(String id, DevFormInfoParameter parameter) {
-        User user = userRepo.getOne(id);
+        User user = userRepo.findById(id).get();
         user.setDevAxForm(parameter.getDevAxForm());
         userRepo.save(user);
     }

@@ -51,7 +51,7 @@ public class User {
     @NotNull
     private Boolean enabled = true;
     @NotNull
-    private  Boolean hasBeenExamined=false;
+    private Boolean hasBeenExamined = false;
     @Column(name = "last_logout_date")
     @Temporal(TemporalType.DATE)
     private Calendar lastLogoutDate;
@@ -64,9 +64,8 @@ public class User {
             cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_activity",
-
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "activity_ID", referencedColumnName = "id")})
+            inverseJoinColumns = {@JoinColumn(name = "activity_id", referencedColumnName = "id")})
     private List<Activity> activitiesJoined = new ArrayList<Activity>();
 
     @OneToMany(targetEntity = Activity.class,

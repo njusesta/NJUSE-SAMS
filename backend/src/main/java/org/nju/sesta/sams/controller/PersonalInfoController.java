@@ -4,7 +4,6 @@ import org.nju.sesta.sams.entity.Activity;
 import org.nju.sesta.sams.entity.AuthUpRequest;
 import org.nju.sesta.sams.entity.DevAxFormItem;
 import org.nju.sesta.sams.enums.RoleName;
-import org.nju.sesta.sams.exception.AuthorityException;
 import org.nju.sesta.sams.exception.BasicException;
 import org.nju.sesta.sams.parameter.PersonalInfo.AuthUpProcessParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.BasicInfoParameter;
@@ -29,7 +28,8 @@ import java.util.Map;
 public class PersonalInfoController {
 
     @Autowired
-    PersonalInfoService service;
+    PersonalInfoService personalInfoService;
+
     @Autowired
     ActivityManageService activityManageService;
 
@@ -43,15 +43,15 @@ public class PersonalInfoController {
             method = RequestMethod.GET)
     public ResponseEntity<?> getPersonalInfo(@PathVariable String id, HttpServletRequest request) {
         if (!id.equals(jwtUtil.getUsernameFromRequest(request)))
-            throw new AuthorityException();
-        return ResponseEntity.ok(new PersonalInfoResponse(service.getPersonalInfo(id)));
+            throw new BasicException(HttpStatus.BAD_REQUEST, "bad request");
+        return ResponseEntity.ok(new PersonalInfoResponse(personalInfoService.getPersonalInfo(id)));
     }
 
     @RequestMapping(value = "/",
             method = RequestMethod.PUT)
     public ResponseEntity<?> updatePersonalInfo(@RequestBody BasicInfoParameter parameter, HttpServletRequest request) {
         String id = jwtUtil.getUsernameFromRequest(request);
-        service.updateBasicInfo(id, parameter);
+        personalInfoService.updateBasicInfo(id, parameter);
         return ResponseEntity.ok(null);
     }
 
@@ -59,61 +59,63 @@ public class PersonalInfoController {
             method = RequestMethod.POST)
     public ResponseEntity<?> applyForAuthUpdating(Map<String, String> param, HttpServletRequest request) {
         String id = jwtUtil.getUsernameFromRequest(request);
-        service.applyForAuthUpdating(RoleName.valueOf(param.get("targetAuthority")), id);
+        personalInfoService.applyForAuthUpdating(RoleName.valueOf(param.get("targetAuthority")), id);
         return ResponseEntity.ok(null);
     }
 
     @RequestMapping(value = "/authority/requests",
             method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAuthUpRequests() {
-        AuthUpRequest[] requests = service.getAuthUpRequests();
+        AuthUpRequest[] requests = personalInfoService.getAuthUpRequests();
         return ResponseEntity.ok(requests);
     }
-    @RequestMapping(value = "/activitiesJoined/list",
-    method = RequestMethod.GET)
-    public ResponseEntity<?> getActivitiesJoined(HttpServletRequest request){
-        String id = jwtUtil.getUsernameFromRequest(request);
-        Activity[] activities=service.getActivityJoined(id);
-        return ResponseEntity.ok(activities);
-    }
-    @RequestMapping(value = "/activitiesReleased/list",
-    method = RequestMethod.GET)
-    public ResponseEntity<?> getActivitiesReleased(HttpServletRequest request){
-        String id = jwtUtil.getUsernameFromRequest(request);
-        Activity[] activities=service.getActivieReleased(id);
-        return ResponseEntity.ok(activities);
-    }
-    @RequestMapping(value = "/activity/{activityId}",
-    method = RequestMethod.GET)
-    public  ResponseEntity<?> getActivityDetail(@PathVariable String activity){
-       return ResponseEntity.ok(new ActivityInfoResponse(activityManageService.getActivityDetail(Long.parseLong(activity))));
-    }
 
-    @RequestMapping(value = "/devAxForm",
-            method = RequestMethod.GET)
-    public ResponseEntity<?> getDevAxForm(HttpServletRequest request){
-        String id = jwtUtil.getUsernameFromRequest(request);
-        DevAxFormItem[] items=service.getDev(id);
-        return ResponseEntity.ok(items);
-    }
-    @RequestMapping(value = "/devAxForm",
-            method = RequestMethod.PUT)
-    public ResponseEntity<?>  updateDevAxForm(@RequestBody DevFormInfoParameter devAxFormItems, HttpServletRequest request){
-        String id = jwtUtil.getUsernameFromRequest(request);
-            service.updateDevAxFormInfo(id,devAxFormItems);
-            return ResponseEntity.ok(null);
-    }
     @RequestMapping(value = "/authority",
             method = RequestMethod.PUT)
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> processAuthUpRequest(@RequestBody AuthUpProcessParameter param) {
-        service.processAuthUpRequest(param.getId(), param.getDecision());
+        personalInfoService.processAuthUpRequest(param.getId(), param.getDecision());
         return ResponseEntity.ok(null);
     }
 
-    @ExceptionHandler(BasicException.class)
-    public ResponseEntity<?> handleBasicException(BasicException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    @RequestMapping(value = "/activitiesJoined/list",
+            method = RequestMethod.GET)
+    public ResponseEntity<?> getActivitiesJoined(HttpServletRequest request) {
+        String id = jwtUtil.getUsernameFromRequest(request);
+        Activity[] activities = personalInfoService.getActivityJoined(id);
+        return ResponseEntity.ok(activities);
     }
+
+    @RequestMapping(value = "/activitiesReleased/list",
+            method = RequestMethod.GET)
+    public ResponseEntity<?> getActivitiesReleased(HttpServletRequest request) {
+        String id = jwtUtil.getUsernameFromRequest(request);
+        Activity[] activities = personalInfoService.getActivityReleased(id);
+        return ResponseEntity.ok(activities);
+    }
+
+    @RequestMapping(value = "/activity/{activityId}",
+            method = RequestMethod.GET)
+    public ResponseEntity<?> getActivityDetail(@PathVariable String activityId) {
+        return ResponseEntity.ok(new ActivityInfoResponse(activityManageService.getActivityDetail(Long.parseLong(activityId))));
+    }
+
+    @RequestMapping(value = "/devAxForm",
+            method = RequestMethod.GET)
+    public ResponseEntity<?> getDevAxForm(HttpServletRequest request) {
+        String id = jwtUtil.getUsernameFromRequest(request);
+        DevAxFormItem[] items = personalInfoService.getDev(id);
+        return ResponseEntity.ok(items);
+    }
+
+    @RequestMapping(value = "/devAxForm",
+            method = RequestMethod.PUT)
+    public ResponseEntity<?> updateDevAxForm(@RequestBody DevFormInfoParameter devAxFormItems, HttpServletRequest request) {
+        String id = jwtUtil.getUsernameFromRequest(request);
+        personalInfoService.updateDevAxFormInfo(id, devAxFormItems);
+        return ResponseEntity.ok(null);
+    }
+
 
 }

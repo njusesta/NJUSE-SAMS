@@ -23,19 +23,19 @@ public class ActivityManageService {
     ApplicantRepository applicantRepo;
 
     public void applyForNewMatch(Activity activity, String studentId) {
-        User user = userRepo.getOne(studentId);
+        User user = userRepo.findById(studentId).get();
         user.getActivitiesReleased().add(activity);
         userRepo.save(user);
     }
 
     public void applyForNewActivity(Activity activity, String studentId) {
-        User user = userRepo.getOne(studentId);
+        User user = userRepo.findById(studentId).get();
         user.getActivitiesReleased().add(activity);
         userRepo.save(user);
     }
 
     public void applyForNewRecruitment(Activity activity, String studentId) {
-        User user = userRepo.getOne(studentId);
+        User user = userRepo.findById(studentId).get();
         user.getActivitiesReleased().add(activity);
         userRepo.save(user);
     }
@@ -60,12 +60,12 @@ public class ActivityManageService {
 
 
     public Activity getActivityDetail(long id) {
-        return activityRepo.getOne(id);
+        return activityRepo.findById(id).get();
     }
 
     public void signUpForActivity(Long id, String studentId) {
-        User u = userRepo.getOne(studentId);
-        Activity a = activityRepo.getOne(id);
+        User u = userRepo.findById(studentId).get();
+        Activity a = activityRepo.findById(id).get();
         if (u.getActivitiesJoined()
                 .stream()
                 .map(Activity::getId)

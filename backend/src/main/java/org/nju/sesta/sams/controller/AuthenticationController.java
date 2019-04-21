@@ -5,6 +5,7 @@ import org.nju.sesta.sams.exception.AuthenticationException;
 import org.nju.sesta.sams.parameter.authentication.JwtAuthenticationParameter;
 import org.nju.sesta.sams.response.authentication.JwtAuthenticationResponse;
 import org.nju.sesta.sams.security.JwtUser;
+import org.nju.sesta.sams.service.JwtUserDetailsService;
 import org.nju.sesta.sams.util.token.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,7 +27,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 @RestController() //RestController本身包含ResponseBody注解
-//@RequestMapping(value = "/login")
 public class AuthenticationController {
 
     @Value("${jwt.header}")
@@ -58,12 +58,25 @@ public class AuthenticationController {
         ImageIO.write(defaultKaptcha.createImage(text), "png", response.getOutputStream());
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        String username = jwtUtil.getUsernameFromRequest(request);
+        JwtUserDetailsService service = (JwtUserDetailsService) userDetailsService;
+        service.logout(username);
+        return ResponseEntity.ok(null);
+    }
+
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationParameter parameter, HttpServletRequest request)
             throws AuthenticationException {
 
+<<<<<<< HEAD
         HttpSession session = request.getSession();
        // validateCaptcha(parameter.getCaptcha(), (String) session.getAttribute("captchaCode"));
+=======
+//        HttpSession session = request.getSession();
+//        validateCaptcha(parameter.getCaptcha(), (String) session.getAttribute("captchaCode"));
+>>>>>>> 879668ae881b11943a6c72b117292fcbae7ebd72
         authenticate(parameter.getUsername(), parameter.getPassword(), parameter.getCaptcha());
 
         // Reload password post-security so we can generate the token
@@ -100,7 +113,7 @@ public class AuthenticationController {
     private void authenticate(String username, String password, String code) {
         Objects.requireNonNull(username);
         Objects.requireNonNull(password);
-        Objects.requireNonNull(code);
+//        Objects.requireNonNull(code);
 
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));

@@ -35,7 +35,7 @@ public class JwtUtil implements Serializable {
     private Long expiration;
 
     public String getUsernameFromRequest(HttpServletRequest request) {
-        String raw = request.getHeader("Authentication");
+        String raw = request.getHeader("Authorization");
         return raw == null ? null : getUsernameFromToken(raw.substring(7));
     }
 

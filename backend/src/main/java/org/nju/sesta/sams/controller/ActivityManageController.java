@@ -126,4 +126,10 @@ public class ActivityManageController {
         return ResponseEntity.ok(null);
     }
 
+    @GetMapping("/afterlogin")
+    public ResponseEntity<?> afterlogin(HttpServletRequest request){
+        String username = jwtUtil.getUsernameFromRequest(request);
+        return ResponseEntity.ok("user "+ username+" has logged in.");
+    }
+
 }

@@ -24,7 +24,9 @@ public class JwtAuthenticationParameter implements Serializable {
     }
 
     public String getUsername() {
-        return this.username;
+        if (username.endsWith("@smail.nju.edu.cn"))//此类只在登录时使用，默认登录使用邮箱，在此进行裁剪返回学号以便与系统行为相符
+            return username.split("@smail.nju.edu.cn")[0];
+        return "000";
     }
 
     public void setUsername(String username) {

@@ -70,13 +70,13 @@ public class AuthenticationController {
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationParameter parameter, HttpServletRequest request)
             throws AuthenticationException {
 
-<<<<<<< HEAD
+
         HttpSession session = request.getSession();
        // validateCaptcha(parameter.getCaptcha(), (String) session.getAttribute("captchaCode"));
-=======
+
 //        HttpSession session = request.getSession();
 //        validateCaptcha(parameter.getCaptcha(), (String) session.getAttribute("captchaCode"));
->>>>>>> 879668ae881b11943a6c72b117292fcbae7ebd72
+
         authenticate(parameter.getUsername(), parameter.getPassword(), parameter.getCaptcha());
 
         // Reload password post-security so we can generate the token

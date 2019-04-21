@@ -63,7 +63,7 @@ public class AuthenticationController {
             throws AuthenticationException {
 
         HttpSession session = request.getSession();
-        validateCaptcha(parameter.getCaptcha(), (String) session.getAttribute("captchaCode"));
+       // validateCaptcha(parameter.getCaptcha(), (String) session.getAttribute("captchaCode"));
         authenticate(parameter.getUsername(), parameter.getPassword(), parameter.getCaptcha());
 
         // Reload password post-security so we can generate the token

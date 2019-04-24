@@ -39,7 +39,7 @@ public class ActivityControllerTest {
         param.setRegStartDate(calendar);
         param.setWay2Register("ddd");
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authentication","Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNzEyNTA3MDIiLCJleHAiOjE1NTY0MzQ1NDUsImlhdCI6MTU1NTgyOTc0NX0.2JMR_IyT2LrUMIFlRLCHL1h1JIDmdX8kAZtoAor-ZEmgmq2fRM8O9f1DbEdAQDQcmg4etz_2OugDZorvNplUcA");
+        headers.set("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNzEyNTA3MDIiLCJleHAiOjE1NTY0MzQ1NDUsImlhdCI6MTU1NTgyOTc0NX0.2JMR_IyT2LrUMIFlRLCHL1h1JIDmdX8kAZtoAor-ZEmgmq2fRM8O9f1DbEdAQDQcmg4etz_2OugDZorvNplUcA");
         ResponseEntity<String> res = testRestTemplate.exchange("/activity/match/new", HttpMethod.POST, new HttpEntity<>(param,headers), String.class);
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
@@ -62,8 +62,12 @@ public class ActivityControllerTest {
         param.setRegStartDate(calendar);
         param.setWay2Register("ddd");
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authentication","Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNzEyNTA3MDIiLCJleHAiOjE1NTY0MzQ1NDUsImlhdCI6MTU1NTgyOTc0NX0.2JMR_IyT2LrUMIFlRLCHL1h1JIDmdX8kAZtoAor-ZEmgmq2fRM8O9f1DbEdAQDQcmg4etz_2OugDZorvNplUcA");
+        headers.set("Authorization","Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNzEyNTA3MDIiLCJleHAiOjE1NTY0MzQ1NDUsImlhdCI6MTU1NTgyOTc0NX0.2JMR_IyT2LrUMIFlRLCHL1h1JIDmdX8kAZtoAor-ZEmgmq2fRM8O9f1DbEdAQDQcmg4etz_2OugDZorvNplUcA");
         ResponseEntity<String> res = testRestTemplate.exchange("/activity/activity/new", HttpMethod.POST, new HttpEntity<>(param,headers), String.class);
         assertThat(res.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+    @Test
+    public void NewRecruitNormal(){
+
     }
 }

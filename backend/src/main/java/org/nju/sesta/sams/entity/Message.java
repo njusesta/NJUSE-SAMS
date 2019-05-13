@@ -1,10 +1,12 @@
 package org.nju.sesta.sams.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Calendar;
 
+@Data
 @Entity
 @Table(name = "tbl_message")
 public class Message {
@@ -24,53 +26,6 @@ public class Message {
 
     private Boolean isRead;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Calendar getReleasedTime() {
-        return releasedTime;
-    }
-
-    public void setReleasedTime(Calendar releasedTime) {
-        this.releasedTime = releasedTime;
-    }
-
-    public Boolean getRead() {
-        return isRead;
-    }
-
-    public void setRead(Boolean read) {
-        isRead = read;
-    }
 
     public Message() {
         releasedTime = Calendar.getInstance();

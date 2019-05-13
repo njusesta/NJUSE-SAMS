@@ -1,5 +1,6 @@
 package org.nju.sesta.sams.entity;
 
+import lombok.Data;
 import org.nju.sesta.sams.response.personalInfo.ContactInformation;
 import org.springframework.context.annotation.Lazy;
 
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name = "tbl_user")
 @Lazy(value = false)
@@ -77,123 +79,5 @@ public class User {
             cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
     private List<DevAxFormItem> DevAxForm = new ArrayList<DevAxFormItem>();
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ContactInformation getContactInformation() {
-        return contactInformation;
-    }
-
-    public void setContactInformation(ContactInformation contactInformation) {
-        this.contactInformation = contactInformation;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    public String getClazz() {
-        return clazz;
-    }
-
-    public void setClazz(String clazz) {
-        this.clazz = clazz;
-    }
-
-    public List<DevAxFormItem> getDevAxForm() {
-        return DevAxForm;
-    }
-
-    public void setDevAxForm(List<DevAxFormItem> devAxForm) {
-        DevAxForm = devAxForm;
-    }
-
-    public String getPasswordEncrypted() {
-        return passwordEncrypted;
-    }
-
-    public void setPasswordEncrypted(String passwordEncrypted) {
-        this.passwordEncrypted = passwordEncrypted;
-    }
-
-    public Boolean getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Calendar getLastLogoutDate() {
-        return lastLogoutDate;
-    }
-
-    public void setLastLogoutDate(Calendar lastLogoutDate) {
-        this.lastLogoutDate = lastLogoutDate;
-    }
-
-    public Calendar getLastPasswordResetDate() {
-        return lastPasswordResetDate;
-    }
-
-    public void setLastPasswordResetDate(Calendar lastPasswordResetDate) {
-        this.lastPasswordResetDate = lastPasswordResetDate;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public List<Activity> getActivitiesJoined() {
-        return activitiesJoined;
-    }
-
-    public void setActivitiesJoined(List<Activity> activitiesJoined) {
-        this.activitiesJoined = activitiesJoined;
-    }
-
-    public List<Activity> getActivitiesReleased() {
-        return activitiesReleased;
-    }
-
-    public void setActivitiesReleased(List<Activity> activitiesReleased) {
-        this.activitiesReleased = activitiesReleased;
-    }
-
-    public Boolean getHasBeenExamined() {
-        return hasBeenExamined;
-    }
-
-    public void setHasBeenExamined(Boolean hasBeenExamined) {
-        this.hasBeenExamined = hasBeenExamined;
-    }
 }

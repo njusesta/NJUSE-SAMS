@@ -63,7 +63,12 @@ public class PersonalInfoService {
         return userRepo.findById(id).get().getActivitiesReleased().stream().toArray(Activity[]::new);
     }
 
-    public void processAuthUpRequest(Long id, Boolean decision) {
+    public Activity[] getRecruitmentReleased(String id) {
+        //这部分需要细化，与获得所有发布过的活动区分开
+        return userRepo.findById(id).get().getActivitiesReleased().stream().toArray(Activity[]::new);
+    }
+
+    public void handleAuthUpRequest(Long id, Boolean decision) {
         AuthUpRequest request = authUpReqRepo.findById(id).get();
         if (decision) {//这部分的写法存疑，涉及多对多实体的存储
             User u = userRepo.findById(request.getStudentId()).get();

@@ -5,9 +5,9 @@ import org.nju.sesta.sams.util.token.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,7 @@ public class MessageController {
     @Value("${jwt.header}")
     String tokenHeader;
 
-    @RequestMapping(value = "/check",
+    @RequestMapping(value = "/unread",
             method = RequestMethod.GET)
     public ResponseEntity<?> checkMessagesUnread(HttpServletRequest request) {
         String studentId = jwtUtil.getUsernameFromRequest(request);
@@ -42,9 +42,9 @@ public class MessageController {
         return ResponseEntity.ok(service.getMessageList(studentId));
     }
 
-    @RequestMapping(value = "/{messageId}",
+    @RequestMapping(value = "",
             method = RequestMethod.GET)
-    public ResponseEntity<?> getMessageDetail(@PathVariable Long messageId) {
+    public ResponseEntity<?> getMessageDetail(@RequestParam(value = "messageId") Long messageId) {
         return ResponseEntity.ok(service.getMessageDetail(messageId));
     }
 

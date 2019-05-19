@@ -1,6 +1,5 @@
 package org.nju.sesta.sams.controller;
 
-import org.nju.sesta.sams.entity.Activity;
 import org.nju.sesta.sams.entity.AuthUpRequest;
 import org.nju.sesta.sams.entity.DevAxFormItem;
 import org.nju.sesta.sams.enums.RoleName;
@@ -9,6 +8,7 @@ import org.nju.sesta.sams.parameter.PersonalInfo.AuthUpProcessParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.BasicInfoParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.DevFormInfoParameter;
 import org.nju.sesta.sams.response.activityInfo.ActivityInfoResponse;
+import org.nju.sesta.sams.response.activityInfo.RoughActivityInfoResponse;
 import org.nju.sesta.sams.response.personalInfo.PersonalInfoResponse;
 import org.nju.sesta.sams.service.ActivityManageService;
 import org.nju.sesta.sams.service.PersonalInfoService;
@@ -19,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -83,7 +82,7 @@ public class PersonalInfoController {
             method = RequestMethod.GET)
     public ResponseEntity<?> getActivitiesJoined(HttpServletRequest request) {
         String id = jwtUtil.getUsernameFromRequest(request);
-        Activity[] activities = personalInfoService.getActivityJoined(id);
+        RoughActivityInfoResponse[] activities = personalInfoService.getActivityJoined(id);
         return ResponseEntity.ok(activities);
     }
 
@@ -91,7 +90,7 @@ public class PersonalInfoController {
             method = RequestMethod.GET)
     public ResponseEntity<?> getActivitiesReleased(HttpServletRequest request) {
         String id = jwtUtil.getUsernameFromRequest(request);
-        Activity[] activities = personalInfoService.getActivityReleased(id);
+        RoughActivityInfoResponse[] activities = personalInfoService.getActivityReleased(id);
         return ResponseEntity.ok(activities);
     }
 

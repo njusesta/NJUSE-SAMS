@@ -109,7 +109,6 @@ public class ActivityManageController {
         service.examineActivity(param.getActivityId(), param.getDecision());
         return ResponseEntity.ok(null);
     }
-
     @RequestMapping(value = "/recruitment/form/{activityId}",
             method = RequestMethod.GET)
     public ResponseEntity<?> getApplicationForm(@PathVariable Long activityId, HttpServletRequest request) {
@@ -125,7 +124,6 @@ public class ActivityManageController {
         service.sendApplicationForm(Long.parseLong(param.get("activityId")), param.get("description"), studentId);
         return ResponseEntity.ok(null);
     }
-
     @GetMapping("/afterlogin")
     public ResponseEntity<?> afterlogin(HttpServletRequest request){
         String username = jwtUtil.getUsernameFromRequest(request);

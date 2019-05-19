@@ -19,6 +19,7 @@ public class ActivityFactory {
         a.setRegStartDate(p.getRegStartDate());
         a.setRegEndDate(p.getRegEndDate());
         a.setWay2Register(p.getWay2Register());
+        a.setPassed(false);
         return a;
     }
 
@@ -33,6 +34,7 @@ public class ActivityFactory {
         a.setRegStartDate(p.getRegStartDate());
         a.setRegEndDate(p.getRegEndDate());
         a.setWay2Register(p.getWay2Register());
+        a.setPassed(false);
         return a;
     }
 
@@ -46,6 +48,7 @@ public class ActivityFactory {
         a.setLimited(p.getLimitedNumber());
         a.setRegStartDate(p.getRegStartDate());
         a.setRegEndDate(p.getRegEndDate());
+        a.setPassed(false);
         return a;
     }
 

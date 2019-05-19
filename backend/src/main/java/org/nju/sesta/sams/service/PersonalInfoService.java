@@ -9,6 +9,7 @@ import org.nju.sesta.sams.enums.RoleName;
 import org.nju.sesta.sams.parameter.PersonalInfo.ActivityInfoParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.BasicInfoParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.DevFormInfoParameter;
+import org.nju.sesta.sams.response.activityInfo.RoughActivityInfoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -55,12 +56,12 @@ public class PersonalInfoService {
         return userRepo.findById(id).get().getDevAxForm().stream().toArray(DevAxFormItem[]::new);
     }
 
-    public Activity[] getActivityJoined(String id) {
-        return userRepo.findById(id).get().getActivitiesJoined().stream().toArray(Activity[]::new);
+    public RoughActivityInfoResponse[] getActivityJoined(String id) {
+        return userRepo.findById(id).get().getActivitiesJoined().stream().map(e -> new RoughActivityInfoResponse(e)).toArray(RoughActivityInfoResponse[]::new);
     }
 
-    public Activity[] getActivityReleased(String id) {
-        return userRepo.findById(id).get().getActivitiesReleased().stream().toArray(Activity[]::new);
+    public RoughActivityInfoResponse[] getActivityReleased(String id) {
+        return userRepo.findById(id).get().getActivitiesReleased().stream().map(e -> new RoughActivityInfoResponse(e)).toArray(RoughActivityInfoResponse[]::new);
     }
 
     public void processAuthUpRequest(Long id, Boolean decision) {
@@ -90,6 +91,5 @@ public class PersonalInfoService {
         user.setDevAxForm(parameter.getDevAxForm());
         userRepo.save(user);
     }
-
 
 }

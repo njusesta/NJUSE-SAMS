@@ -93,6 +93,11 @@
             <version>1.18.6</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.4</version>
+        </dependency>
 
 
         <!--好像是个静态代码分析工具暂时不管-->

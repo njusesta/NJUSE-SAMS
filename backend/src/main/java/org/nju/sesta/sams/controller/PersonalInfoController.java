@@ -1,5 +1,6 @@
 package org.nju.sesta.sams.controller;
 
+import org.nju.sesta.sams.entity.Activity;
 import org.nju.sesta.sams.entity.AuthUpRequest;
 import org.nju.sesta.sams.entity.DevAxFormItem;
 import org.nju.sesta.sams.enums.RoleName;
@@ -98,7 +99,7 @@ public class PersonalInfoController {
             method = RequestMethod.GET)
     public ResponseEntity<?> getRecruitmentReleased(HttpServletRequest request) {
         String id = jwtUtil.getUsernameFromRequest(request);
-        Activity[] activities = personalInfoService.getActivityReleased(id);
+        RoughActivityInfoResponse[] activities = personalInfoService.getRecruitmentReleased(id);
         return ResponseEntity.ok(activities);
     }
 

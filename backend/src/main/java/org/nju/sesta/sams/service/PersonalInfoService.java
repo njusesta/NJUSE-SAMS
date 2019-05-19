@@ -5,6 +5,7 @@ import org.nju.sesta.sams.dao.MessageRepository;
 import org.nju.sesta.sams.dao.RoleRepository;
 import org.nju.sesta.sams.dao.UserRepository;
 import org.nju.sesta.sams.entity.*;
+import org.nju.sesta.sams.enums.ActivityKind;
 import org.nju.sesta.sams.enums.RoleName;
 import org.nju.sesta.sams.parameter.PersonalInfo.ActivityInfoParameter;
 import org.nju.sesta.sams.parameter.PersonalInfo.BasicInfoParameter;
@@ -61,12 +62,12 @@ public class PersonalInfoService {
     }
 
     public RoughActivityInfoResponse[] getActivityReleased(String id) {
-        return userRepo.findById(id).get().getActivitiesReleased().stream().map(e -> new RoughActivityInfoResponse(e)).toArray(RoughActivityInfoResponse[]::new);
+        return userRepo.findById(id).get().getActivitiesReleased().stream().filter(e ->e.getKind()!= ActivityKind.RECRUITMENT).map(e -> new RoughActivityInfoResponse(e)).toArray(RoughActivityInfoResponse[]::new);
     }
 
-    public Activity[] getRecruitmentReleased(String id) {
+    public RoughActivityInfoResponse[] getRecruitmentReleased(String id) {
         //这部分需要细化，与获得所有发布过的活动区分开
-        return userRepo.findById(id).get().getActivitiesReleased().stream().toArray(Activity[]::new);
+        return userRepo.findById(id).get().getActivitiesReleased().stream().filter(e ->e.getKind()== ActivityKind.RECRUITMENT).map(e -> new RoughActivityInfoResponse(e)).toArray(RoughActivityInfoResponse[]::new);
     }
 
     public void handleAuthUpRequest(Long id, Boolean decision) {

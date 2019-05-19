@@ -92,6 +92,10 @@ public class ActivityManageService {
         return applicantRepo.findAllByActivityId(activityId).stream().toArray(Applicant[]::new);
     }
 
+    public Applicant getCertainApplicationForm(Long activityId, Long formId) {
+        return applicantRepo.findById(formId).get();
+    }
+
     public void sendApplicationForm(Long activityId, String description, String studentId) {
         Applicant applicant = new Applicant();
         applicant.setActivityId(activityId);

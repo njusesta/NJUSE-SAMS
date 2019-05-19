@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/info")
+@RequestMapping(value = "/user")
 public class PersonalInfoController {
 
     @Autowired
@@ -38,15 +38,15 @@ public class PersonalInfoController {
     @Value("${jwt.header}")
     String tokenHeader;
 
-    @RequestMapping(value = "/{id}",
+    @RequestMapping(value = "/info",
             method = RequestMethod.GET)
-    public ResponseEntity<?> getPersonalInfo(@PathVariable String id, HttpServletRequest request) {
+    public ResponseEntity<?> getPersonalInfo(@RequestParam(value = "id") String id, HttpServletRequest request) {
         if (!id.equals(jwtUtil.getUsernameFromRequest(request)))
             throw new BasicException(HttpStatus.BAD_REQUEST, "bad request");
         return ResponseEntity.ok(new PersonalInfoResponse(personalInfoService.getPersonalInfo(id)));
     }
 
-    @RequestMapping(value = "/",
+    @RequestMapping(value = "/info",
             method = RequestMethod.PUT)
     public ResponseEntity<?> updatePersonalInfo(@RequestBody BasicInfoParameter parameter, HttpServletRequest request) {
         String id = jwtUtil.getUsernameFromRequest(request);
@@ -73,12 +73,12 @@ public class PersonalInfoController {
     @RequestMapping(value = "/authority",
             method = RequestMethod.PUT)
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> processAuthUpRequest(@RequestBody AuthUpProcessParameter param) {
-        personalInfoService.processAuthUpRequest(param.getId(), param.getDecision());
+    public ResponseEntity<?> handleAuthUpRequest(@RequestBody AuthUpProcessParameter param) {
+        personalInfoService.handleAuthUpRequest(param.getId(), param.getDecision());
         return ResponseEntity.ok(null);
     }
 
-    @RequestMapping(value = "/activitiesJoined/list",
+    @RequestMapping(value = "/info/activity/joined/list",
             method = RequestMethod.GET)
     public ResponseEntity<?> getActivitiesJoined(HttpServletRequest request) {
         String id = jwtUtil.getUsernameFromRequest(request);
@@ -86,7 +86,7 @@ public class PersonalInfoController {
         return ResponseEntity.ok(activities);
     }
 
-    @RequestMapping(value = "/activitiesReleased/list",
+    @RequestMapping(value = "/info/activity/released/list",
             method = RequestMethod.GET)
     public ResponseEntity<?> getActivitiesReleased(HttpServletRequest request) {
         String id = jwtUtil.getUsernameFromRequest(request);
@@ -94,13 +94,21 @@ public class PersonalInfoController {
         return ResponseEntity.ok(activities);
     }
 
-    @RequestMapping(value = "/activity/{activityId}",
+    @RequestMapping(value = "/info/recruitment/released/list",
             method = RequestMethod.GET)
-    public ResponseEntity<?> getActivityDetail(@PathVariable String activityId) {
-        return ResponseEntity.ok(new ActivityInfoResponse(activityManageService.getActivityDetail(Long.parseLong(activityId))));
+    public ResponseEntity<?> getRecruitmentReleased(HttpServletRequest request) {
+        String id = jwtUtil.getUsernameFromRequest(request);
+        Activity[] activities = personalInfoService.getActivityReleased(id);
+        return ResponseEntity.ok(activities);
     }
 
-    @RequestMapping(value = "/devAxForm",
+//    @RequestMapping(value = "/info/activity/joed{activityId}",
+//            method = RequestMethod.GET)
+//    public ResponseEntity<?> getActivityDetail(@PathVariable String activityId) {
+//        return ResponseEntity.ok(new ActivityInfoResponse(activityManageService.getActivityDetail(Long.parseLong(activityId))));
+//    }
+
+    @RequestMapping(value = "/info/dev_ax_form",
             method = RequestMethod.GET)
     public ResponseEntity<?> getDevAxForm(HttpServletRequest request) {
         String id = jwtUtil.getUsernameFromRequest(request);
@@ -108,12 +116,36 @@ public class PersonalInfoController {
         return ResponseEntity.ok(items);
     }
 
-    @RequestMapping(value = "/devAxForm",
+    @RequestMapping(value = "/info/dev_ax_form",
             method = RequestMethod.PUT)
     public ResponseEntity<?> updateDevAxForm(@RequestBody DevFormInfoParameter devAxFormItems, HttpServletRequest request) {
         String id = jwtUtil.getUsernameFromRequest(request);
         personalInfoService.updateDevAxFormInfo(id, devAxFormItems);
         return ResponseEntity.ok(null);
+    }
+
+    @RequestMapping(value = "/info/dev_ax_form/responsible",
+            method = RequestMethod.GET)
+    @PreAuthorize("hasRole('MONITOR')")
+    public ResponseEntity<?> getResponsibleDevAxForm(HttpServletRequest request) {
+        //TODO 获取班长负责的所有学生的发展测评表
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @RequestMapping(value = "/info/dev_ax_form/responsible",
+            method = RequestMethod.PUT)
+    @PreAuthorize("hasRole('MONITOR')")
+    public ResponseEntity<?> examineDevAxForm(HttpServletRequest request) {
+        //TODO 班长审核发展测评表
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @RequestMapping(value = "/class/student/list",
+            method = RequestMethod.GET)
+    @PreAuthorize("hasRole('MONITOR')")
+    public ResponseEntity<?> getClassStudentList(HttpServletRequest request) {
+        //TODO 班长获取已在系统中注册的本班学生名单
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
 

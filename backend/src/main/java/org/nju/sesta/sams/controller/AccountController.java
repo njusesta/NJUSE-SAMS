@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/account")
+@RequestMapping
 public class AccountController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class AccountController {
      * @param param 包含用户名、密码、验证码的字典
      * @return 处理结果
      */
-    @RequestMapping(value = "/register",
+    @RequestMapping(value = "/account/register",
             method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody AccountSettingParameter param) {
         param.checkNotNull(
@@ -50,9 +50,9 @@ public class AccountController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "/resetting",
+    @RequestMapping(value = "/password/resetting",
             method = RequestMethod.PUT)
-    public ResponseEntity<?> resetPassword(@RequestBody AccountSettingParameter param, HttpServletRequest request) {
+    public ResponseEntity<?> resetPassword(AccountSettingParameter param, HttpServletRequest request) {
         param.checkNotNullIgnoreId(
                 () ->
                         new BasicException(HttpStatus.NOT_ACCEPTABLE, "格式不完整")

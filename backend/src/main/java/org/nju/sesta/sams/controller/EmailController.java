@@ -27,7 +27,7 @@ public class EmailController {
     @RequestMapping(value = "/code_request",
             method = RequestMethod.POST)
     public ResponseEntity<?> sendCaptchaMail(@RequestBody Map<String, String> param) {
-        service.sendVerificationCode(param.get("id"), param.get("type"));
+        service.sendVerificationCode(param.get("userId"), param.get("type"));
         return ResponseEntity.ok(null);
     }
 
